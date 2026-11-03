@@ -20,7 +20,7 @@ No paper, email, or app required.</p><button className="primary" onClick={openDe
    <source src="/media/cindertap-demo.mp4" type="video/mp4" />
    Your browser does not support video. <a href="/media/cindertap-demo.mp4">Download the demo</a>.
   </video>
-  <figcaption aria-live="polite">{playbackError ? 'Use the video controls to start playback.' : 'From checkout to your phone.'}</figcaption>
+  {playbackError && <figcaption aria-live="polite">Use the video controls to start playback.</figcaption>}
  </figure></section>
  <section className="benefits shell" id="how-it-works"><div className="benefit-grid">{[
  ['Tap at checkout', 'Hold your phone near the CinderTap tile.'],
