@@ -98,19 +98,11 @@ document.querySelectorAll<HTMLButtonElement>('[data-export]').forEach(button => 
  } else void exportReceipt(kind)
 }))
 select('#confirm-export').addEventListener('click',() => {void exportReceipt(selectedExport)})
-let joined = false
-try { joined = localStorage.getItem('cindertap-mm-demo-rewards') === 'joined' } catch { /* Storage can be unavailable in private browsing. */ }
-function showMembership() {
-  select('#reward-action').textContent = 'View your demo rewards'
-  select('#join-rewards').innerHTML = 'Your demo card is active <svg><use href="#check"/></svg>'
-  select<HTMLButtonElement>('#join-rewards').disabled = true
-  select('#rewards-dialog-title').innerHTML = 'You’re on<br>the demo list.'
-}
-if(joined) showMembership()
-select('#join-rewards').addEventListener('click', () => {
-  try { localStorage.setItem('cindertap-mm-demo-rewards','joined') } catch { /* Keep the experience usable without storage. */ }
-  showMembership()
-  notify('Demo rewards activated. No real enrollment.')
+select('#copy-coupon').addEventListener('click', async () => {
+ try {
+  await navigator.clipboard.writeText('PIZZA10')
+  notify('Coupon code copied.')
+ } catch { notify('Your coupon code is PIZZA10.') }
 })
 // Load motion only when the rewards card is approached. Content never waits for it.
 const motionTarget = select('.reward-card')

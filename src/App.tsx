@@ -5,10 +5,8 @@ import { useGSAP } from '@gsap/react'
 import './App.css'
 gsap.registerPlugin(ScrollTrigger, useGSAP)
 function Mark({ small = false, dark = false }: { small?: boolean; dark?: boolean }) { return <img className="brand-mark" width={small ? 26 : 36} height={small ? 26 : 36} src={`/brand/cindertap-mark${dark ? "-dark" : ""}.svg`} alt="" aria-hidden="true" /> }
-const shops = ['The Daily', 'Corner Store']
 function App() {
  const [tapped, setTapped] = useState(false)
- const receiptIndex = 0
  function openDemo() {
   if (moving) return
   demoPhone.current?.closest('.product-scene')?.scrollIntoView({behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block:'center'})
@@ -55,8 +53,18 @@ function App() {
             
             
             <button className="tile" ref={demoTile} onClick={openDemo} aria-label="Run interactive receipt demo" aria-disabled={moving}><span className="tile-brand"><Mark small dark /> CinderTap</span><svg className="nfc" viewBox="0 0 60 60" fill="none" aria-hidden="true"><path d="M29 15a22 22 0 0 1 0 30M37 9a30 30 0 0 1 0 42M21 21a14 14 0 0 1 0 18" stroke="currentColor" strokeWidth="3" strokeLinecap="round" /></svg><span className="tile-instruction">Tap for your receipt</span><span className="tile-bottom">LESS PAPER. MORE POSSIBILITY.</span><span className="contact-pulse"/></button>
-            <div className="phone" ref={demoPhone} aria-live="polite"><div className="phone-island" /><div className="phone-time">9:41 <span>◕ ▰</span></div><div className="receipt"><span className="receipt-flower">✳</span><div className="receipt-shop">{shops[receiptIndex]}</div><div className="receipt-caption">DIGITAL RECEIPT</div><div className="receipt-check">✓</div><h3>{tapped ? 'Just like that.' : 'You’re all set.'}</h3><p>Your receipt, without the paper.</p><div className="receipt-items"><div><span>{receiptIndex === 0 ? "Oat milk latte" : "House blend"}</span><span>$5.50</span></div><div><span>Butter croissant</span><span>$4.00</span></div><div className="receipt-total"><strong>Total</strong><strong>$9.50</strong></div></div><div className="receipt-loyalty">A receipt worth keeping.<br /><strong>Your next coffee, on us.</strong></div><div className="receipt-powered">Powered by CinderTap</div></div><div className="phone-bottom" /></div>
-            <div className="tap-prompt"><span className="status-dot" />{moving ? 'One quick tap…' : tapped ? 'Receipt received. Tap to replay.' : 'Tap the tile to try it.'}</div><div className="demo-label">Illustrative receipt preview</div>
+            <div className={`phone ${tapped ? 'phone-open' : 'phone-locked'}`} ref={demoPhone}>
+              <div className="phone-island" />
+              {tapped ? <><div className="phone-time">9:41 <span>◕ ▰</span></div><div className="phone-site"><iframe src="/demo/" title="Interactive Mad Mushroom sample receipt" /></div></> : <div className="lock-screen" aria-label="Phone lock screen, ready to tap">
+                <svg className="lock-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="6" y="10" width="12" height="10" rx="3" stroke="currentColor" strokeWidth="1.5"/><path d="M9 10V7a3 3 0 0 1 6 0v3" stroke="currentColor" strokeWidth="1.5"/></svg>
+                <span className="lock-date">{new Intl.DateTimeFormat('en-US', { weekday: 'long', month: 'long', day: 'numeric' }).format(new Date())}</span>
+                <span className="lock-time">9:41</span>
+                <div className="lock-hint"><Mark small dark/><span>Tap the tile<br/>to get your receipt</span></div>
+                <div className="lock-shortcuts" aria-hidden="true"><span>☼</span><span>◎</span></div>
+              </div>}
+              <div className="phone-bottom" />
+            </div>
+            <div className="tap-prompt"><span className="status-dot" />{moving ? 'One quick tap…' : tapped ? 'Receipt received. Tap to replay.' : 'Tap the tile to try it.'}</div><div className="demo-label" aria-live="polite">{tapped ? <a href="/demo/">Open sample receipt full screen ↗</a> : 'Interactive tap demo'}</div>
           </div></section>
  <div className="marquee" aria-label="Tap. Get your receipt. Get on with your day."><div aria-hidden="true">{Array.from({length:4},(_,i)=><span key={i}>Tap. <i>Receipt.</i> Done. <b>↗</b> </span>)}</div></div>
  <section className="benefits shell" id="how-it-works"><div className="section-heading"><p>Less to ask for.<br/>More to come back for.</p><h2>A better end<br/>to every checkout.</h2></div><div className="benefit-grid">{[['No details needed.','Customers tap their phone to open a branded receipt in an App Clip. No email address or phone number to spell out.'],['Your checkout stays.','Designed to connect with existing POS systems, including Square, Shopify, and Clover. Integrations in development.'],['Paper, at your pace.','Works alongside your receipt printer. Let customers choose while your store makes the switch.']].map(([title,body])=><article key={title}><h3>{title}</h3><p>{body}</p></article>)}</div></section>

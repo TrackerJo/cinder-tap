@@ -21,3 +21,20 @@
 .primary{background:#ffb000;color:#1a120d}
 .primary:hover{background:#ffc247}
 .contact-pulse{border-color:#ffb000;box-shadow:0 0 0 15px #ff6a1330,0 0 0 30px #ff6a1315}
+
+/* A locked phone becomes the real receipt site at contact. */
+.phone{overflow:hidden}
+.phone-locked{background:#1a120d;color:#fff6e6}
+.lock-screen{position:absolute;inset:0;display:flex;align-items:center;flex-direction:column;background:radial-gradient(ellipse at 90% 85%,#9b430d 0,transparent 55%),radial-gradient(ellipse at 0 40%,#614b3b 0,transparent 65%),#15100d;padding-top:36px}
+.lock-icon{width:15px;height:15px;margin-bottom:14px}
+.lock-date{font-size:9px;font-weight:500}
+.lock-time{font-size:51px;font-weight:550;letter-spacing:-3px;line-height:1.2}
+.lock-hint{margin-top:auto;margin-bottom:36px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:7px;font-size:9px;line-height:1.6;color:#fff6e6}
+.lock-hint .brand-mark{width:32px;height:32px}
+.lock-shortcuts{display:flex;width:100%;justify-content:space-between;padding:0 20px 23px}
+.lock-shortcuts span{width:27px;height:27px;border-radius:50%;display:grid;place-items:center;background:#fff6e619;font-size:17px}
+.phone-locked .phone-bottom{background:#fff6e6}
+.phone-island,.phone-time,.phone-bottom{z-index:2}
+.phone-site{position:absolute;top:34px;bottom:13px;left:0;right:0;overflow:hidden;background:#fff6e6}
+.phone-site iframe{display:block;border:0;width:375px;height:680px;transform:scale(.488);transform-origin:top left;background:#fff6e6}
+.demo-label a{font-size:9px;letter-spacing:0;text-decoration:underline;text-underline-offset:3px}
