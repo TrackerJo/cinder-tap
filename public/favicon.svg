@@ -1,1 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#2e332b"/><path d="m18 4-12 14h9l-1 10 12-15h-9l1-9Z" fill="#d79973"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 120 120" role="img" aria-label="CinderTap"><rect width="120" height="120" rx="26" fill="#15100D"/>
+          <path d="M28 16 Q28 8 36 8 H84 Q92 8 92 16 V42.1 L86.0 50.1 L75.7 48.9 L67.7 52.7 L61.0 59.2 L51.0 58.6 L45.3 67.3 L36.1 68.4 L28.0 71.9 Z" fill="#FFF6E6"></path>
+          <path d="M28 71.9 L36.1 68.4 L45.3 67.3 L51.0 58.6 L61.0 59.2 L67.7 52.7 L75.7 48.9 L86.0 50.1 L92.0 42.1 V102 L76 112 L60 102 L44 112 L28 102 Z" fill="#15100D" stroke="#FFF6E6" stroke-width="6" stroke-linejoin="round"></path>
+          <path d="M28 71.9 L36.1 68.4 L45.3 67.3 L51.0 58.6 L61.0 59.2 L67.7 52.7 L75.7 48.9 L86.0 50.1 L92.0 42.1" fill="none" stroke="#FFB000" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>

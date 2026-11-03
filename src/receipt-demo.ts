@@ -49,7 +49,10 @@ async function receiptImage() {
  line('Tax (7%)','$1.89',960,26)
  line('Total paid','$28.89',1050,42,'#ba1d24')
  line('Visa ending in 4242','Paid in full',1140,24,'#777164')
- ctx.textAlign='center';ctx.fillStyle='#777164';ctx.font='22px "Work Sans", sans-serif';ctx.fillText('Powered by CinderTap',500,1260)
+ const platformMark = new Image(); platformMark.src = '/brand/cindertap-mark.svg'
+ await platformMark.decode()
+ ctx.drawImage(platformMark,350,1225,40,40)
+ ctx.textAlign='left';ctx.fillStyle='#2A1A10';ctx.font='22px "Work Sans", sans-serif';ctx.fillText('Powered by CinderTap',400,1252)
  return canvas
 }
 let selectedExport = ''
