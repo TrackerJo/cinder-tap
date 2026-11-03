@@ -16,7 +16,7 @@ function App() {
  <section className="hero shell" id="demo"><div className="hero-copy"><h1 className="max-w-6xl">Receipts.<br/><span>One tap away.</span></h1><div className="hero-detail"><p>Tap your phone. Take your receipt.
 No paper, email, or app required.</p><button className="primary" onClick={openDemo}>Watch the demo <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></button></div></div>
  <figure className="video-demo">
-  <video ref={video} controls playsInline preload="metadata" poster="/media/cindertap-demo.jpg" aria-label="CinderTap demonstration: tap a phone to receive a digital receipt">
+  <video ref={video} controls autoPlay muted playsInline preload="metadata" poster="/media/cindertap-demo.jpg" aria-label="CinderTap demonstration: tap a phone to receive a digital receipt">
    <source src="/media/cindertap-demo.mp4" type="video/mp4" />
    Your browser does not support video. <a href="/media/cindertap-demo.mp4">Download the demo</a>.
   </video>
