@@ -1,4 +1,4 @@
-import './typography'
+import './typography.css'
 // This page is a standalone entry: no React or landing-page animation bundle.
 const select = <T extends Element = HTMLElement>(selector: string) => document.querySelector<T>(selector)!
 const toast = select('#toast')
