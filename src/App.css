@@ -1,19 +1,3 @@
-/* A locked phone becomes the real receipt site at contact. */
-.phone{overflow:hidden}
-.phone-locked{background:#1a120d;color:#fff6e6}
-.lock-screen{position:absolute;inset:0;display:flex;align-items:center;flex-direction:column;background:radial-gradient(ellipse at 90% 85%,#9b430d 0,transparent 55%),radial-gradient(ellipse at 0 40%,#614b3b 0,transparent 65%),#15100d;padding-top:36px}
-.lock-icon{width:15px;height:15px;margin-bottom:14px}
-.lock-date{font-size:9px;font-weight:500}
-.lock-time{font-size:51px;font-weight:550;letter-spacing:-3px;line-height:1.2}
-.lock-hint{margin-top:auto;margin-bottom:36px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:7px;font-size:9px;line-height:1.6;color:#fff6e6}
-.lock-hint .brand-mark{width:32px;height:32px}
-.lock-shortcuts{display:flex;width:100%;justify-content:space-between;padding:0 20px 23px}
-.lock-shortcuts span{width:27px;height:27px;border-radius:50%;display:grid;place-items:center;background:#fff6e619;font-size:17px}
-.phone-locked .phone-bottom{background:#fff6e6}
-.phone-island,.phone-time,.phone-bottom{z-index:2}
-.phone-site{position:absolute;top:34px;bottom:13px;left:0;right:0;overflow:hidden;background:#fff6e6}
-.phone-site iframe{display:block;border:0;width:375px;height:680px;transform:scale(.488);transform-origin:top left;background:#fff6e6}
-.demo-label a{font-size:9px;letter-spacing:0;text-decoration:underline;text-underline-offset:3px}
 :root { --accent: #ffa13c; --ink: #191919; --muted: #747474; --line: #ebebeb; }
 .shell { width: calc(100% - 96px); max-width: 1160px; margin-inline: auto; }
 .overflow-x-hidden { overflow-x: clip; }
@@ -35,24 +19,9 @@ h1 span { color: var(--ink); }
 .primary { display: inline-flex; align-items: center; gap: 32px; background: var(--accent); color: #20170d; border: 0; border-radius: 7px; padding: 15px 19px; margin-top: 28px; font-size: 13px; font-weight: 500; transition: background .2s, transform .2s; }
 .primary:hover { background: #ffb35f; transform: translateY(-2px); }
 .nav-demo:hover { background: #fafafa; }
-.product-scene { position: relative; height: 490px; background: #f7f7f7; border: 1px solid #ededed; border-radius: 14px; overflow: hidden; isolation: isolate; }
-.tile { position: absolute; top: 258px; left: 10%; width: 185px; height: 158px; border-radius: 13px; border: 1px solid #414141; background: #252525; color: white; transform: rotate(-10deg); box-shadow: 0 5px 0 #151515, 0 15px 25px #00000012; display: flex; flex-direction: column; align-items: center; padding: 17px 12px; transition: transform .4s; }
-.tile:hover { transform: rotate(-6deg) translateY(-3px); }
-.tile-brand { display: flex; align-items: center; gap: 3px; font-size: 12px; }
-.tile-brand .brand-mark { width: 21px; height: 21px; }
-.nfc { width: 43px; height: 43px; margin: 8px 0; color: var(--accent); }
-.tile-instruction { font-size: 9px; }
-.phone { position: absolute; right: 13%; top: 38px; width: 193px; height: 377px; border: 5px solid #242424; outline: 1px solid #727272; border-radius: 31px; background: white; transform: rotate(10deg); box-shadow: 9px 15px 24px #00000015; z-index: 3; }
-.phone-island { position: absolute; top: 7px; left: 62px; width: 60px; height: 16px; background: #181818; border-radius: 20px; }
-.phone-time { display: flex; justify-content: space-between; padding: 14px 15px; color: #222; font-size: 8px; }
-.phone-time span { font-size: 7px; }
-.phone-bottom { position: absolute; bottom: 7px; left: 64px; width: 56px; height: 3px; background: #222; border-radius: 4px; }
-.lock-screen { background: radial-gradient(ellipse at 90% 100%, #6d4725, transparent 75%), #202020; color: #fff; }
-.lock-hint { color: #eee; margin-bottom: 45px; }
-.contact-pulse { position: absolute; left: calc(50% - 40px); top: calc(50% - 40px); width: 80px; height: 80px; border: 1px solid var(--accent); border-radius: 50%; opacity: 0; pointer-events: none; box-shadow: 0 0 0 14px #ffa13c15; }
-.tap-prompt { position: absolute; bottom: 37px; inset-inline: 0; display: flex; align-items: center; justify-content: center; gap: 7px; color: #636363; font-size: 11px; }
-.status-dot { width: 5px; height: 5px; background: var(--accent); border-radius: 50%; }
-.demo-label { position: absolute; bottom: 17px; inset-inline: 0; text-align: center; color: #898989; font-size: 9px; }
+ .video-demo { margin: 0; min-width: 0; }
+.video-demo video { display: block; width: 100%; aspect-ratio: 16 / 9; border-radius: 10px; background: #151515; object-fit: contain; }
+.video-demo figcaption { margin-top: 12px; color: var(--muted); font-size: 11px; }
 .benefits { border-top: 1px solid var(--line); padding-block: 38px 60px; }
 .benefit-grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-flow: dense; gap: 48px; }
 .benefit-grid h2 { font-size: 15px; font-weight: 500; letter-spacing: -.3px; }
