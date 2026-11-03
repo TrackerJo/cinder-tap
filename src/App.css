@@ -1,12 +1,19 @@
 @import url('https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,600,700,800&display=swap');
 
 :root {
-  --accent:#f49452;
-  --ink:#292b25;
-  --muted:#6f7166;
-  --line:#d6d8c9;
+  --brand-paper:#FFF6E6;
+  --brand-ink:#1A120D;
+  --brand-orange:#FF6A13;
+  --brand-gold:#FFB000;
+  --brand-ember:#A63F0B;
+  --brand-muted:#786B5C;
+  --brand-line:#E2D4C1;
+  --accent:var(--brand-orange);
+  --ink:var(--brand-ink);
+  --muted:var(--brand-muted);
+  --line:var(--brand-line);
   font-family:'Cabinet Grotesk',system-ui,sans-serif;
-  background:#efeee6;
+  background:var(--brand-paper);
   color:var(--ink)
 }
 
@@ -26,7 +33,7 @@
 }
 main {
   font-family:'Cabinet Grotesk',system-ui,sans-serif;
-  background:radial-gradient(ellipse at 95% 14%,#dfdfc9 0,transparent 36%),radial-gradient(ellipse at 0 40%,#f3d5b5 0,transparent 32%),#efeee6
+  background:radial-gradient(ellipse at 95% 14%,#ffe8c7 0,transparent 36%),radial-gradient(ellipse at 0 40%,#fff0d7 0,transparent 32%),var(--brand-paper)
 }
 .brand-mark {
   display:block;
@@ -60,7 +67,7 @@ nav {
   font-weight:600
 }
 .nav-demo {
-  border:1px solid #bfc1b0;
+  border:1px solid var(--brand-line);
   border-radius:30px;
   padding:13px 20px;
   background:transparent;
@@ -70,7 +77,7 @@ nav {
   margin-left:24px
 }
 .nav-demo:hover {
-  background:#dedfce
+  background:#f5e6d2
 }
 .hero {
   display:grid;
@@ -87,7 +94,7 @@ h1 {
   max-width:1152px
 }
 h1 span {
-  color:#9a482b
+  color:var(--brand-ember)
 }
 .hero-detail {
   margin-top:30px
@@ -104,7 +111,7 @@ h1 span {
   justify-content:space-between;
   gap:32px;
   background:var(--ink);
-  color:#fff7ea;
+  color:var(--brand-paper);
   border:0;
   border-radius:30px;
   padding:17px 24px;
@@ -114,7 +121,7 @@ h1 span {
   transition:background .2s,transform .2s
 }
 .primary:hover {
-  background:#a14b2c;
+  background:var(--brand-ember);
   color:white;
   transform:translateY(-3px)
 }
@@ -123,10 +130,10 @@ h1 span {
   margin:0;
   min-width:0;
   padding:16px;
-  background:#d7d9c7;
-  border:1px solid #bfc2ac;
+  background:#f1e3cf;
+  border:1px solid var(--brand-line);
   border-radius:18px;
-  box-shadow:16px 22px 0 -4px #c9ccb2,0 35px 60px -35px #343d2a55;
+  box-shadow:16px 22px 0 -4px #e8d3b6,0 35px 60px -35px #1a120d26;
   transform:rotate(2deg);
   transition:transform .7s
 }
@@ -148,7 +155,7 @@ h1 span {
   width:7px;
   height:7px;
   border-radius:50%;
-  background:#637249
+  background:var(--brand-orange)
 }
 .video-demo video {
   display:block;
@@ -164,8 +171,8 @@ h1 span {
 }
 .marquee {
   overflow:hidden;
-  background:#a14b2c;
-  color:#f7e8d3;
+  background:var(--brand-ember);
+  color:var(--brand-paper);
   padding:22px 0;
   transform:rotate(-2deg);
   width:104%;
@@ -225,13 +232,13 @@ h2 {
 }
 .benefit-grid article {
   overflow:hidden;
-  border:1px solid #d4d3c4;
+  border:1px solid var(--brand-line);
   border-radius:14px;
-  background:#e6e5d8;
+  background:#f3e9db;
   transition:background .4s
 }
 .benefit-grid article:hover,.benefit-grid article:focus {
-  background:#f8eddb
+  background:#fff0d9
 }
 .step-art {
   height:220px;
@@ -240,7 +247,7 @@ h2 {
   justify-content:center;
   gap:20px;
   overflow:hidden;
-  background:radial-gradient(ellipse,#d0d6b9,transparent 70%)
+  background:radial-gradient(ellipse,#f0d8b5,transparent 70%)
 }
 .step-art>* {
   transition:transform .7s
@@ -248,19 +255,19 @@ h2 {
 .tap-phone {
   width:82px;
   height:132px;
-  border:6px solid #353b2c;
+  border:6px solid var(--brand-ink);
   border-radius:18px;
-  background:#c2cba7;
+  background:#ffe3b8;
   display:grid;
   place-items:center;
   font-size:35px;
-  box-shadow:10px 15px 0 #333c2515;
+  box-shadow:10px 15px 0 #1a120d15;
   transform:rotate(-12deg)
 }
 .tap-waves {
   font-size:32px;
   letter-spacing:6px;
-  color:#6b7856
+  color:#a47c52
 }
 .mini-receipt {
   width:110px;
@@ -272,7 +279,7 @@ h2 {
 }
 .mini-receipt>span {
   display:block;
-  background:#d5d3c2;
+  background:var(--brand-line);
   height:3px;
   margin-top:10px
 }
@@ -284,10 +291,10 @@ h2 {
 .save-folder {
   height:95px;
   width:135px;
-  background:#ab5738;
+  background:var(--brand-ember);
   border-radius:3px 12px 12px;
   position:relative;
-  box-shadow:8px 12px 0 #333c2510;
+  box-shadow:8px 12px 0 #1a120d10;
   transform:rotate(-7deg)
 }
 .save-folder:before {
@@ -297,7 +304,7 @@ h2 {
   left:0;
   width:58px;
   height:20px;
-  background:#ab5738;
+  background:var(--brand-ember);
   border-radius:5px
 }
 .save-folder span {
@@ -305,11 +312,11 @@ h2 {
   place-items:center;
   font-size:40px;
   height:100%;
-  color:#ffe9cb
+  color:var(--brand-paper)
 }
 .step-copy {
   padding:25px;
-  border-top:1px solid #d4d3c4
+  border-top:1px solid var(--brand-line)
 }
 .step-copy h3 {
   display:flex;
@@ -320,7 +327,7 @@ h2 {
 }
 .step-copy h3 span {
   font-size:18px;
-  color:#7d846b
+  color:var(--brand-muted)
 }
 .step-copy p {
   font-size:15px;
@@ -351,7 +358,7 @@ h2 {
   height:36px;
   vertical-align:middle;
   border-radius:30px;
-  background:linear-gradient(110deg,#b2bb96aa,#d7c7ac66),url('/media/cindertap-demo.jpg') center/cover
+  background:linear-gradient(110deg,#e6c49caa,#f2d8b766),url('/media/cindertap-demo.jpg') center/cover
 }
 .receipt-stack {
   padding:30px 15px 0;
@@ -361,10 +368,10 @@ h2 {
   border-radius:12px;
   padding:30px;
   min-height:330px;
-  box-shadow:0 18px 35px #22281712
+  box-shadow:0 18px 35px #1a120d12
 }
 .card-back {
-  background:#d5d9bf;
+  background:#efdfc7;
   transform:rotate(-6deg);
   margin-right:40px
 }
@@ -381,20 +388,20 @@ h2 {
 .receipt-lines {
   height:50px;
   margin-top:25px;
-  background:repeating-linear-gradient(transparent 0 12px,#aab394 12px 14px)
+  background:repeating-linear-gradient(transparent 0 12px,#bb9e78 12px 14px)
 }
 .card-front {
   position:relative;
   margin-left:65px;
   margin-top:-160px;
-  background:#292f25;
-  color:#f4eedf;
+  background:var(--brand-ink);
+  color:var(--brand-paper);
   transform:rotate(5deg)
 }
 .card-front>span {
   display:block;
   font-size:13px;
-  color:#bac4aa;
+  color:#cfbda5;
   margin-top:18px
 }
 .card-front>strong {
@@ -406,12 +413,12 @@ h2 {
 }
 .card-front em {
   font-style:normal;
-  color:#f49452
+  color:var(--brand-orange)
 }
 .receipt-bottom {
   display:flex;
   justify-content:space-between;
-  border-top:1px solid #56604a;
+  border-top:1px solid #68523b;
   padding-top:18px;
   font-size:13px
 }
@@ -419,7 +426,7 @@ footer.shell {
   max-width:none;
   width:100%;
   padding:38px max(48px,calc((100% - 1240px)/2));
-  background:#d9dcc9;
+  background:#f0e1cc;
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -430,11 +437,11 @@ footer .brand {
   font-size:21px
 }
 footer>a:nth-child(2) {
-  border-bottom:1px solid #9ca58c;
+  border-bottom:1px solid #c4a680;
   padding-bottom:6px
 }
 a:hover {
-  color:#9a482b
+  color:var(--brand-ember)
 }
 
 @media(min-width:850px) {
@@ -553,4 +560,7 @@ footer>span {
 
 }
 
-.integration-art{height:200px;padding:25px;background:#e0e3d3}.review-art,.loyalty-art,.offer-art{width:100%;max-width:240px;padding:22px;border-radius:8px;background:#faf8ef;box-shadow:0 9px 20px #25301d0a;display:flex;flex-direction:column;align-items:center;gap:11px;font-size:11px}.integration-google{font-family:Arial,sans-serif;font-weight:700;font-size:31px;color:#4285f4}.integration-stars{color:#d69a25;letter-spacing:3px;font-size:18px;white-space:nowrap}.loyalty-art{background:#313a2b;color:#f5f0e1}.loyalty-art strong{font-size:14px;font-weight:500}.loyalty-art>div{display:flex;gap:8px}.loyalty-art>div>span{width:27px;height:27px;border:1px dashed #a3ad8f;border-radius:50%;display:grid;place-items:center}.loyalty-art .filled{background:#d1dbb5;color:#33412b;border-style:solid}.loyalty-art>span{font-size:10px;color:#bac5a6}.offer-art{background:#ae5236;color:#fff3df;gap:7px;border:1px dashed #ffd7a266}.offer-art strong{font-size:33px;font-weight:500;letter-spacing:-1px}.offer-art>span:last-child{border-top:1px solid #f2c29d60;width:100%;text-align:center;padding-top:11px;margin-top:5px}.integration-story{align-items:center;gap:80px}.integration-story .story-copy{padding-top:0}.integration-story .story-copy h2{max-width:550px;font-size:clamp(34px,3.7vw,53px)}.story-copy .integration-note{font-size:13px;line-height:1.6;margin-top:17px;max-width:340px}.receipt-example{border:1px solid #dcd7c7;background:#fffdf7;border-radius:13px;box-shadow:0 16px 45px #29332410;overflow:hidden;width:100%;max-width:420px;justify-self:center}.example-merchant{background:#ba1d24;padding:22px;display:flex;justify-content:center;border-bottom:4px solid #e8a537}.example-merchant img{width:240px;max-width:100%;height:auto}.example-content{padding:23px}.example-summary{border-bottom:1px dashed #dcd7c7;padding-bottom:18px}.example-summary>span{display:flex;justify-content:space-between;font-weight:600;font-size:14px}.example-summary small{font-weight:400;color:#8b8678;font-size:10px}.example-summary>div{display:flex;gap:20px;justify-content:space-between;align-items:center;margin-top:18px;font-size:10px;color:#7d7769}.example-summary strong{font-size:20px;color:#36352c;white-space:nowrap}.example-review{display:flex;align-items:center;gap:14px;border:1px solid #e4d8b7;border-radius:5px;padding:16px;margin-top:18px}.example-review>div{display:flex;flex-direction:column;gap:6px;flex:1;font-size:10px;color:#8a7c63}.example-review strong{font-size:12px;font-weight:500;color:#35342c}.example-review .integration-google{font-size:28px}.example-review .integration-stars{font-size:14px}.example-review>span:last-child{color:#a1583c}.example-loyalty{display:flex;flex-direction:column;gap:8px;background:#eef0e4;border-radius:5px;margin-top:11px;padding:16px;color:#59664b;font-size:10px}.example-loyalty strong{font-size:13px;font-weight:500;color:#35442b}.example-loyalty>span:first-child{font-size:9px}.example-offer{margin-top:11px;padding:18px 16px;background:#ba1d24;color:#fff2dc;border:3px solid #e8a537;display:flex;align-items:center;justify-content:space-between;gap:15px}.example-offer>div{display:flex;flex-direction:column;gap:3px}.example-offer strong{font-size:24px;line-height:1.1;letter-spacing:-1px}.example-offer>div>span{font-size:12px}.example-offer>span{font-size:10px}.example-offer:hover{color:white;background:#a11920}.example-caption{display:block;text-align:center;margin-top:17px;font-size:9px;color:#8e8778}@media(max-width:950px){.integration-story{gap:40px}.step-copy h3{font-size:20px}.integration-art{padding:18px}.loyalty-art{padding:18px 12px}.loyalty-art>div{gap:5px}}@media(max-width:700px){.integration-story{gap:40px}.integration-art{height:190px}.integration-story .story-copy h2{font-size:38px;max-width:none}.receipt-example{max-width:420px}.step-copy h3{font-size:23px}}
+.integration-art{height:200px;padding:25px;background:#f2e5d3}.review-art,.loyalty-art,.offer-art{width:100%;max-width:240px;padding:22px;border-radius:8px;background:var(--brand-paper);box-shadow:0 9px 20px #1a120d0a;display:flex;flex-direction:column;align-items:center;gap:11px;font-size:11px}.integration-google{font-family:Arial,sans-serif;font-weight:700;font-size:31px;color:#4285f4}.integration-stars{color:#d69a25;letter-spacing:3px;font-size:18px;white-space:nowrap}.loyalty-art{background:var(--brand-ink);color:var(--brand-paper)}.loyalty-art strong{font-size:14px;font-weight:500}.loyalty-art>div{display:flex;gap:8px}.loyalty-art>div>span{width:27px;height:27px;border:1px dashed #ab8b64;border-radius:50%;display:grid;place-items:center}.loyalty-art .filled{background:#ffb000;color:var(--brand-ink);border-style:solid}.loyalty-art>span{font-size:10px;color:#d1bfa5}.offer-art{background:var(--brand-ember);color:var(--brand-paper);gap:7px;border:1px dashed #ffd7a266}.offer-art strong{font-size:33px;font-weight:500;letter-spacing:-1px}.offer-art>span:last-child{border-top:1px solid #f2c29d60;width:100%;text-align:center;padding-top:11px;margin-top:5px}.integration-story{align-items:center;gap:80px}.integration-story .story-copy{padding-top:0}.integration-story .story-copy h2{max-width:550px;font-size:clamp(34px,3.7vw,53px)}.story-copy .integration-note{font-size:13px;line-height:1.6;margin-top:17px;max-width:340px}.receipt-example{border:1px solid var(--brand-line);background:#fffcf5;border-radius:13px;box-shadow:0 16px 45px #1a120d10;overflow:hidden;width:100%;max-width:420px;justify-self:center}.example-merchant{background:#ba1d24;padding:22px;display:flex;justify-content:center;border-bottom:4px solid #e8a537}.example-merchant img{width:240px;max-width:100%;height:auto}.example-content{padding:23px}.example-summary{border-bottom:1px dashed var(--brand-line);padding-bottom:18px}.example-summary>span{display:flex;justify-content:space-between;font-weight:600;font-size:14px}.example-summary small{font-weight:400;color:var(--brand-muted);font-size:10px}.example-summary>div{display:flex;gap:20px;justify-content:space-between;align-items:center;margin-top:18px;font-size:10px;color:var(--brand-muted)}.example-summary strong{font-size:20px;color:var(--brand-ink);white-space:nowrap}.example-review{display:flex;align-items:center;gap:14px;border:1px solid #e4d8b7;border-radius:5px;padding:16px;margin-top:18px}.example-review>div{display:flex;flex-direction:column;gap:6px;flex:1;font-size:10px;color:#8a7c63}.example-review strong{font-size:12px;font-weight:500;color:var(--brand-ink)}.example-review .integration-google{font-size:28px}.example-review .integration-stars{font-size:14px}.example-review>span:last-child{color:#a1583c}.example-loyalty{display:flex;flex-direction:column;gap:8px;background:#f6ead7;border-radius:5px;margin-top:11px;padding:16px;color:#866342;font-size:10px}.example-loyalty strong{font-size:13px;font-weight:500;color:var(--brand-ink)}.example-loyalty>span:first-child{font-size:9px}.example-offer{margin-top:11px;padding:18px 16px;background:#ba1d24;color:#fff2dc;border:3px solid #e8a537;display:flex;align-items:center;justify-content:space-between;gap:15px}.example-offer>div{display:flex;flex-direction:column;gap:3px}.example-offer strong{font-size:24px;line-height:1.1;letter-spacing:-1px}.example-offer>div>span{font-size:12px}.example-offer>span{font-size:10px}.example-offer:hover{color:white;background:#a11920}.example-caption{display:block;text-align:center;margin-top:17px;font-size:9px;color:#8e8778}@media(max-width:950px){.integration-story{gap:40px}.step-copy h3{font-size:20px}.integration-art{padding:18px}.loyalty-art{padding:18px 12px}.loyalty-art>div{gap:5px}}@media(max-width:700px){.integration-story{gap:40px}.integration-art{height:190px}.integration-story .story-copy h2{font-size:38px;max-width:none}.receipt-example{max-width:420px}.step-copy h3{font-size:23px}}
+
+/* Brand-owned surfaces use the receipt mark's cream, charcoal, and ember palette. */
+.marquee{background:var(--brand-ink);color:var(--brand-paper)}.marquee b{color:var(--brand-orange)}.integration-art.reviews{background:#f5e9d8}.integration-art.loyalty{background:#efe0ca}.integration-art.offers{background:#f5e9d8}.offer-art{background:var(--brand-ink);border-color:#ffb00066}.offer-art strong{color:var(--brand-gold)}.offer-art>span:last-child{border-color:#e2d4c140}::selection{background:#ffd9b8;color:var(--brand-ink)}
