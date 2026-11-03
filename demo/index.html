@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#f5f2eb"><meta name="robots" content="noindex"><meta name="description" content="A sample Mad Mushroom digital receipt, powered by CinderTap."><title>Mad Mushroom · Your receipt</title><link rel="icon" href="/favicon.svg"><link rel="preload" href="/fonts/satoshi-regular.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/src/receipt-demo.css">
+</head>
+<body>
+<svg class="svg-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+<symbol id="arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+<symbol id="star" viewBox="0 0 24 24"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9L12 3Z"/></symbol>
+<symbol id="mushroom" viewBox="0 0 80 80"><path d="M12 44C12 24 24 12 40 12s28 12 28 32H12Z"/><path d="M31 44v17a9 9 0 0 0 18 0V44M24 34h1m14-9h1m15 10h1"/></symbol>
+<symbol id="save" viewBox="0 0 24 24"><path d="M12 3v12m-4-4 4 4 4-4M5 16v4h14v-4"/></symbol>
+<symbol id="check" viewBox="0 0 24 24"><path d="m6 12 4 4 8-8"/></symbol>
+<symbol id="bolt" viewBox="0 0 24 24"><path d="m14 2-10 12h8l-2 8 10-13h-8l2-7Z"/></symbol>
+</defs></svg>
+<main class="receipt-page overflow-x-hidden w-full max-w-full">
+<header class="topbar"><a href="/" class="powered-logo" aria-label="CinderTap home"><svg><use href="#bolt"/></svg><span>CinderTap</span></a><span>Demo receipt</span></header>
+<section class="merchant"><div class="merchant-title"><p>GOOD FOOD. GOOD COMPANY.</p><h1 class="max-w-6xl">Mad<br>Mushroom<span>®</span></h1></div><svg class="merchant-art" role="img" aria-label="Illustrated mushroom"><use href="#mushroom"/></svg></section>
+<div class="welcome"><span class="paid-mark"><svg><use href="#check"/></svg> All paid. All yours.</span><p>Thanks for stopping by.</p></div>
+<nav class="quick-actions" aria-label="Quick actions"><button data-open="review-dialog"><svg><use href="#star"/></svg>Leave a review</button><span aria-hidden="true"></span><button data-open="rewards-dialog"><svg><use href="#mushroom"/></svg>Join rewards</button></nav>
+<section class="receipt-paper" aria-labelledby="receipt-heading"><div class="paper-top"><div><h2 id="receipt-heading">Your receipt</h2><p>Nov 2, 2026 · 6:42 PM</p></div><span class="order-number">#CT-1042</span></div>
+<div class="order-item"><span class="qty">1</span><div><h3>Cheese pizza</h3><p>14″ · Original crust</p></div><span>$14.00</span></div>
+<div class="order-item"><span class="qty">1</span><div><h3>Cheesestix</h3><p>With marinara</p></div><span>$8.00</span></div>
+<div class="order-item"><span class="qty">2</span><div><h3>Fountain drink</h3><p>$2.50 each</p></div><span>$5.00</span></div>
+<div class="totals"><div><span>Subtotal</span><span>$27.00</span></div><div><span>Tax <small>(sample 7%)</small></span><span>$1.89</span></div><div class="total"><span>Total paid</span><span>$28.89</span></div></div>
+<details class="payment-details"><summary><span>Payment details</span><span class="expand" aria-hidden="true">+</span></summary><div><span>Visa ending in 4242</span><span>Paid in full</span></div><p>Sample transaction · No payment was processed.</p></details>
+<button class="save-button" id="save-receipt"><svg><use href="#save"/></svg><span>Save receipt</span><span class="save-format">.txt</span></button>
+</section>
+<div class="action-grid">
+<section class="reward-card" aria-labelledby="rewards-title"><div class="reward-heading"><div><p>MAKE IT A REGULAR THING.</p><h2 id="rewards-title">Your next visit.<br>A little more rewarding.</h2></div><svg aria-hidden="true"><use href="#mushroom"/></svg></div><div class="stamp-row" aria-label="Illustrative rewards card: one of five stamps"><span class="earned"><svg><use href="#mushroom"/></svg></span><span>2</span><span>3</span><span>4</span><span><svg><use href="#star"/></svg></span></div><p class="reward-copy">A little thank-you, every time you come back.</p><button class="reward-button" data-open="rewards-dialog"><span id="reward-action">Join rewards</span><svg><use href="#arrow"/></svg></button><small>Sample rewards program</small></section>
+<button class="review-card" data-open="review-dialog"><span class="review-icon"><svg><use href="#star"/></svg></span><span><strong>How was your visit?</strong><span>Leave a review</span></span><svg class="review-arrow"><use href="#arrow"/></svg></button>
+</div>
+<div class="goodbye"><p>See you for <span class="inline-mushroom"><svg><use href="#mushroom"/></svg></span> another slice.</p><span>Your receipt. Minus the paper.</span></div>
+<footer><a href="/" class="powered-logo"><svg><use href="#bolt"/></svg><span>Powered by CinderTap</span></a><p>Demo experience · Sample items and prices.<br>Not an official Mad Mushroom receipt.</p></footer>
+</main>
+<dialog id="rewards-dialog" aria-labelledby="rewards-dialog-title"><div class="sheet-handle" aria-hidden="true"></div><button class="close" aria-label="Close rewards" data-close>×</button><div class="sheet-symbol"><svg><use href="#mushroom"/></svg></div><p class="sheet-kicker">MAD MUSHROOM · SAMPLE REWARDS</p><h2 id="rewards-dialog-title">Good taste.<br>Great perks.</h2><p>Picture your regular visits adding up to something good.</p><div class="reward-rules"><div><span>01</span><p>Tap for your receipt after each visit.</p></div><div><span>02</span><p>Collect a stamp on your rewards card.</p></div><div><span>03</span><p>Come back for a little thank-you.</p></div></div><button class="sheet-primary" id="join-rewards">Try the rewards card <svg><use href="#arrow"/></svg></button><p class="sheet-disclosure">Demo only. No signup, personal details, or real enrollment. Your demo card is saved on this device.</p></dialog>
+<dialog id="review-dialog" aria-labelledby="review-dialog-title"><div class="sheet-handle" aria-hidden="true"></div><button class="close" aria-label="Close review" data-close>×</button><div class="sheet-symbol"><svg><use href="#star"/></svg></div><p class="sheet-kicker">MAD MUSHROOM · SAMPLE REVIEW</p><h2 id="review-dialog-title">How was<br>your visit?</h2><p>A quick word goes a long way.</p><form id="review-form"><fieldset class="rating"><legend>Your rating</legend><div class="rating-stars"> <label><input type="radio" name="rating" value="1" required aria-label="1 star"><svg><use href="#star"/></svg></label><label><input type="radio" name="rating" value="2" aria-label="2 stars"><svg><use href="#star"/></svg></label><label><input type="radio" name="rating" value="3" aria-label="3 stars"><svg><use href="#star"/></svg></label><label><input type="radio" name="rating" value="4" aria-label="4 stars"><svg><use href="#star"/></svg></label><label><input type="radio" name="rating" value="5" aria-label="5 stars"><svg><use href="#star"/></svg></label></div></fieldset><label class="review-label" for="review-message">Anything to add? <span>Optional</span></label><textarea id="review-message" name="message" maxlength="500" rows="3" placeholder="The pizza, the people, the little things…"></textarea><button class="sheet-primary" type="submit">Preview review <svg><use href="#arrow"/></svg></button></form><div id="review-preview" hidden aria-live="polite"><div id="preview-stars"></div><blockquote id="preview-message"></blockquote><p>This is your sample review. Nothing has been published or sent.</p><button class="sheet-secondary" id="edit-review">Edit review</button></div><p class="sheet-disclosure">Demo only. A live receipt would link to the merchant’s review page. Nothing you enter is stored or submitted.</p></dialog>
+<div class="toast" role="status" aria-live="polite" id="toast"></div>
+<script type="module" src="/src/receipt-demo.ts"></script>
+</body></html>
