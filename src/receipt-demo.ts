@@ -55,6 +55,9 @@ async function receiptImage() {
 let selectedExport = ''
 const exportDescriptions: Record<string,string> = {
  quickbooks:'Download a transaction CSV with the date, merchant, and amount. Import it into your selected QuickBooks bank or credit card account.',
+ dext:'Download a receipt image, then upload it to Dext to capture the expense.',
+ hubdoc:'Download a receipt image, then upload it to your Hubdoc document inbox.',
+ xero:'Download a receipt image, then attach it to the matching expense or transaction in Xero.',
  expensify:'Download a receipt image, then upload it to Expensify to attach it to an expense.'
 }
 async function exportReceipt(kind: string) {
@@ -85,9 +88,9 @@ document.querySelectorAll<HTMLButtonElement>('[data-export]').forEach(button => 
  const kind = button.dataset.export!
  if(kind in exportDescriptions) {
   selectedExport=kind
-  select('#export-title').textContent = `Export for ${kind === 'quickbooks' ? 'QuickBooks' : 'Expensify'}`
+  select('#export-title').textContent = `Export for ${({quickbooks:'QuickBooks',expensify:'Expensify',dext:'Dext',hubdoc:'Hubdoc',xero:'Xero'} as Record<string,string>)[kind]}`
   select('#export-description').textContent = exportDescriptions[kind]
-  select('#confirm-export').textContent = kind === 'expensify' ? 'Download receipt image' : 'Download transaction CSV'
+  select('#confirm-export').textContent = kind === 'quickbooks' ? 'Download transaction CSV' : 'Download receipt image'
   select<HTMLDialogElement>('#export-dialog').showModal()
  } else void exportReceipt(kind)
 }))
