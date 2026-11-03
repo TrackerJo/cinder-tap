@@ -1,3 +1,4 @@
+import './typography'
 // This page is a standalone entry: no React or landing-page animation bundle.
 const select = <T extends Element = HTMLElement>(selector: string) => document.querySelector<T>(selector)!
 const toast = select('#toast')
@@ -23,17 +24,18 @@ function downloadFile(blob: Blob, filename: string) {
 }
 async function receiptImage() {
  await document.fonts.ready
+ const bodyFont = getComputedStyle(document.documentElement).getPropertyValue('--font-body').trim()
  const canvas = document.createElement('canvas')
  canvas.width = 1000; canvas.height = 1340
  const ctx = canvas.getContext('2d')!
  ctx.fillStyle = '#fffef9'; ctx.fillRect(0,0,1000,1340)
  ctx.fillStyle = '#ba1d24';ctx.fillRect(0,0,1000,240)
- const logo = new Image(); logo.src = '/brand/mad-mushroom-logo.png'
+ const logo = new Image(); logo.src = '/brand/pizza-company-logo.svg'
  await logo.decode()
  ctx.drawImage(logo,140,45,720,162)
  ctx.fillStyle = '#e8a537';ctx.fillRect(0,240,1000,10)
  function line(left: string, right: string, y: number, size=28, color='#292823') {
-  ctx.fillStyle=color; ctx.font=`${size}px "Work Sans", sans-serif`;ctx.textAlign='left';ctx.fillText(left,70,y);ctx.textAlign='right';ctx.fillText(right,930,y)
+  ctx.fillStyle=color; ctx.font=`${size}px ${bodyFont}`;ctx.textAlign='left';ctx.fillText(left,70,y);ctx.textAlign='right';ctx.fillText(right,930,y)
  }
  line('Your receipt','#CT-1042',335,34,'#ba1d24')
  line('Nov 2, 2026 · 6:42 PM','',395,24,'#777164')
@@ -52,7 +54,7 @@ async function receiptImage() {
  const platformMark = new Image(); platformMark.src = '/brand/cindertap-mark.svg'
  await platformMark.decode()
  ctx.drawImage(platformMark,350,1225,40,40)
- ctx.textAlign='left';ctx.fillStyle='#2A1A10';ctx.font='22px "Work Sans", sans-serif';ctx.fillText('Powered by CinderTap',400,1252)
+ ctx.textAlign='left';ctx.fillStyle='#2A1A10';ctx.font=`22px ${bodyFont}`;ctx.fillText('Powered by CinderTap',400,1252)
  return canvas
 }
 let selectedExport = ''
@@ -68,18 +70,18 @@ async function exportReceipt(kind: string) {
  button.disabled = true; button.setAttribute('aria-busy','true')
  try {
   if(kind === 'quickbooks') {
-   const csv = 'Date,Description,Amount\r\n11/02/2026,Mad Mushroom CT-1042,-28.89\r\n'
-   downloadFile(new Blob([csv],{type:'text/csv;charset=utf-8'}),`mad-mushroom-${kind}.csv`)
+   const csv = 'Date,Description,Amount\r\n11/02/2026,Pizza Company CT-1042,-28.89\r\n'
+   downloadFile(new Blob([csv],{type:'text/csv;charset=utf-8'}),`pizza-company-${kind}.csv`)
   } else {
    const canvas = await receiptImage()
    if(kind === 'pdf') {
     const {jsPDF} = await import('jspdf')
     const doc = new jsPDF({unit:'px',format:[500,670],hotfixes:['px_scaling']})
     doc.addImage(canvas.toDataURL('image/png'),'PNG',0,0,500,670)
-    doc.save('mad-mushroom-receipt.pdf')
+    doc.save('pizza-company-receipt.pdf')
    } else {
     const blob = await new Promise<Blob>((resolve,reject) => canvas.toBlob(b => b ? resolve(b) : reject(new Error('Image export failed')),'image/png'))
-    downloadFile(blob,'mad-mushroom-receipt.png')
+    downloadFile(blob,'pizza-company-receipt.png')
    }
   }
   select<HTMLDialogElement>('#export-dialog').close()

@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=DM+Sans:wght@400..800&family=Fraunces:opsz,wght@9..144,400..800&family=Work+Sans:wght@400..800&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,600,700,800&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap');
+
+:root {
+  --headline-tracking: 0em;
+  --font-heading: 'Bricolage Grotesque', system-ui, sans-serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+}
+:root[data-font-pairing='cabinet'] {
+  --headline-tracking: -.025em;
+  --font-heading: 'Cabinet Grotesk', system-ui, sans-serif;
+  --font-body: 'Satoshi', system-ui, sans-serif;
+}
+:root[data-font-pairing='fraunces'] {
+  --headline-tracking: -.015em;
+  --font-heading: 'Fraunces', Georgia, serif;
+  --font-body: 'Work Sans', system-ui, sans-serif;
+}
+h1, h2, h3, .brand, .closing-brand, .goodbye > p,
+.integration-art strong, .handset-receipt > strong, .handset-reward > strong {
+  font-family: var(--font-heading);
+  font-optical-sizing: auto;
+}
+
+.font-switcher {
+  position: fixed;
+  z-index: 50;
+  right: 20px;
+  bottom: max(20px, env(safe-area-inset-bottom));
+  width: min(310px, calc(100vw - 32px));
+  padding: 12px 14px;
+  background: #fff6e6;
+  color: #1a120d;
+  border: 1px solid #d8c6af;
+  border-radius: 8px;
+  box-shadow: 0 6px 24px #1a120d20;
+  font-family: var(--font-body);
+}
+.font-switcher label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+.font-switcher select {
+  width: 100%;
+  min-height: 36px;
+  padding: 6px;
+  border: 1px solid #d8c6af;
+  border-radius: 3px;
+  background: #fff6e6;
+  color: #1a120d;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+.font-switcher select:focus-visible { outline: 2px solid #a63f0b; outline-offset: 3px; }
+@media (max-width: 700px) {
+  .font-switcher { right: 16px; bottom: max(12px, env(safe-area-inset-bottom)); }
+}
+@media print {
+  .font-switcher { display: none; }
+}

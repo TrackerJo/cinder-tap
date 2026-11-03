@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="135" viewBox="0 0 600 135" role="img" aria-label="Pizza Company">
+  <g fill="none" stroke="#fff8e6" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M24 29Q67 5 110 29L67 116Z"/>
+    <path d="M29 40Q67 18 105 40" stroke="#e8a537" stroke-width="9"/>
+    <circle cx="56" cy="49" r="6"/><circle cx="77" cy="64" r="6"/><circle cx="64" cy="86" r="5"/>
+  </g>
+  <text x="140" y="70" fill="#fff8e6" font-family="Arial, Helvetica, sans-serif" font-size="62" font-weight="800" letter-spacing="3">PIZZA</text>
+  <text x="144" y="108" fill="#e8a537" font-family="Arial, Helvetica, sans-serif" font-size="27" font-weight="700" letter-spacing="9">COMPANY</text>
+</svg>
