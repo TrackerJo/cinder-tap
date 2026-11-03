@@ -15,16 +15,84 @@ document.querySelectorAll<HTMLDialogElement>('dialog').forEach(dialog => {
   dialog.querySelector('[data-close]')?.addEventListener('click', () => dialog.close())
   dialog.addEventListener('click', event => { if(event.target === dialog) dialog.close() })
 })
-select('#save-receipt').addEventListener('click', () => {
-  const text = 'MAD MUSHROOM — SAMPLE RECEIPT\nNot an official receipt. No payment processed.\n\nNov 2, 2026 · 6:42 PM\nOrder #CT-1042\n\n1 Cheese pizza (14 inch)        $14.00\n1 Cheesestix                     $8.00\n2 Fountain drinks                $5.00\n\nSubtotal                        $27.00\nSample tax (7%)                   $1.89\nTotal paid                      $28.89\n\nSample Visa ending 4242\n\nPowered by CinderTap\n'
-  const url = URL.createObjectURL(new Blob([text], {type:'text/plain;charset=utf-8'}))
-  const link = document.createElement('a')
-  link.href = url
-  link.download = 'mad-mushroom-sample-receipt.txt'
-  link.click()
-  setTimeout(() => URL.revokeObjectURL(url), 1000)
-  notify('Your sample receipt is ready to save.')
-})
+function downloadFile(blob: Blob, filename: string) {
+ const url = URL.createObjectURL(blob)
+ const link = document.createElement('a')
+ link.href = url; link.download = filename; link.click()
+ setTimeout(() => URL.revokeObjectURL(url), 10000)
+}
+async function receiptImage() {
+ await document.fonts.ready
+ const canvas = document.createElement('canvas')
+ canvas.width = 1000; canvas.height = 1340
+ const ctx = canvas.getContext('2d')!
+ ctx.fillStyle = '#fffef9'; ctx.fillRect(0,0,1000,1340)
+ ctx.fillStyle = '#ba1d24';ctx.fillRect(0,0,1000,240)
+ const logo = new Image(); logo.src = '/brand/mad-mushroom-logo.png'
+ await logo.decode()
+ ctx.drawImage(logo,140,45,720,162)
+ ctx.fillStyle = '#e8a537';ctx.fillRect(0,240,1000,10)
+ function line(left: string, right: string, y: number, size=28, color='#292823') {
+  ctx.fillStyle=color; ctx.font=`${size}px "Work Sans", sans-serif`;ctx.textAlign='left';ctx.fillText(left,70,y);ctx.textAlign='right';ctx.fillText(right,930,y)
+ }
+ line('Your receipt','#CT-1042',335,34,'#ba1d24')
+ line('Nov 2, 2026 · 6:42 PM','',395,24,'#777164')
+ ctx.strokeStyle='#dedbcf';ctx.beginPath();ctx.moveTo(70,440);ctx.lineTo(930,440);ctx.stroke()
+ line('1  Cheese pizza','$14.00',520)
+ line('    14 inch · Original crust','',560,22,'#777164')
+ line('1  Cheesestix','$8.00',635)
+ line('    With marinara','',675,22,'#777164')
+ line('2  Fountain drinks','$5.00',750)
+ line('    $2.50 each','',790,22,'#777164')
+ ctx.beginPath();ctx.moveTo(70,840);ctx.lineTo(930,840);ctx.stroke()
+ line('Subtotal','$27.00',905,26)
+ line('Tax (7%)','$1.89',960,26)
+ line('Total paid','$28.89',1050,42,'#ba1d24')
+ line('Visa ending in 4242','Paid in full',1140,24,'#777164')
+ ctx.textAlign='center';ctx.fillStyle='#777164';ctx.font='22px "Work Sans", sans-serif';ctx.fillText('Powered by CinderTap',500,1260)
+ return canvas
+}
+let selectedExport = ''
+const exportDescriptions: Record<string,string> = {
+ quickbooks:'Download a transaction CSV with the date, merchant, and amount. Import it into your selected QuickBooks bank or credit card account.',
+ ynab:'Download a YNAB transaction CSV with the date, payee, memo, and outflow. Import it into your selected YNAB account.',
+ expensify:'Download a receipt image, then upload it to Expensify to attach it to an expense.'
+}
+async function exportReceipt(kind: string) {
+ const button = select<HTMLButtonElement>(kind in exportDescriptions ? '#confirm-export' : `[data-export="${kind}"]`)
+ button.disabled = true; button.setAttribute('aria-busy','true')
+ try {
+  if(kind === 'quickbooks' || kind === 'ynab') {
+   const csv = kind === 'quickbooks' ? 'Date,Description,Amount\r\n11/02/2026,Mad Mushroom CT-1042,-28.89\r\n' : 'Date,Payee,Memo,Outflow,Inflow\r\n11/02/2026,Mad Mushroom,Receipt CT-1042,28.89,\r\n'
+   downloadFile(new Blob([csv],{type:'text/csv;charset=utf-8'}),`mad-mushroom-${kind}.csv`)
+  } else {
+   const canvas = await receiptImage()
+   if(kind === 'pdf') {
+    const {jsPDF} = await import('jspdf')
+    const doc = new jsPDF({unit:'px',format:[500,670],hotfixes:['px_scaling']})
+    doc.addImage(canvas.toDataURL('image/png'),'PNG',0,0,500,670)
+    doc.save('mad-mushroom-receipt.pdf')
+   } else {
+    const blob = await new Promise<Blob>((resolve,reject) => canvas.toBlob(b => b ? resolve(b) : reject(new Error('Image export failed')),'image/png'))
+    downloadFile(blob,'mad-mushroom-receipt.png')
+   }
+  }
+  select<HTMLDialogElement>('#export-dialog').close()
+  notify('Your receipt is ready to download.')
+ } catch { notify('Could not create the file. Please try again.') }
+ finally {button.disabled=false;button.removeAttribute('aria-busy')}
+}
+document.querySelectorAll<HTMLButtonElement>('[data-export]').forEach(button => button.addEventListener('click',() => {
+ const kind = button.dataset.export!
+ if(kind in exportDescriptions) {
+  selectedExport=kind
+  select('#export-title').textContent = `Export for ${kind === 'quickbooks' ? 'QuickBooks' : kind === 'ynab' ? 'YNAB' : 'Expensify'}`
+  select('#export-description').textContent = exportDescriptions[kind]
+  select('#confirm-export').textContent = kind === 'expensify' ? 'Download receipt image' : 'Download transaction CSV'
+  select<HTMLDialogElement>('#export-dialog').showModal()
+ } else void exportReceipt(kind)
+}))
+select('#confirm-export').addEventListener('click',() => {void exportReceipt(selectedExport)})
 let joined = false
 try { joined = localStorage.getItem('cindertap-mm-demo-rewards') === 'joined' } catch { /* Storage can be unavailable in private browsing. */ }
 function showMembership() {
