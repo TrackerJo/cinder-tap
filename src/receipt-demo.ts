@@ -12,7 +12,7 @@ document.querySelectorAll<HTMLButtonElement>('[data-open]').forEach(button => {
   button.addEventListener('click', () => select<HTMLDialogElement>(`#${button.dataset.open}`).showModal())
 })
 document.querySelectorAll<HTMLDialogElement>('dialog').forEach(dialog => {
-  dialog.querySelector('[data-close]')?.addEventListener('click', () => dialog.close())
+  dialog.querySelectorAll('[data-close]').forEach(button => button.addEventListener('click', () => dialog.close()))
   dialog.addEventListener('click', event => { if(event.target === dialog) dialog.close() })
 })
 function downloadFile(blob: Blob, filename: string) {
@@ -111,24 +111,6 @@ select('#join-rewards').addEventListener('click', () => {
   try { localStorage.setItem('cindertap-mm-demo-rewards','joined') } catch { /* Keep the experience usable without storage. */ }
   showMembership()
   notify('Demo rewards activated. No real enrollment.')
-})
-const form = select<HTMLFormElement>('#review-form')
-form.addEventListener('change', () => {
-  const rating = Number(new FormData(form).get('rating'))
-  form.querySelectorAll('label').forEach((label,index) => label.classList.toggle('selected', index < rating))
-})
-form.addEventListener('submit', event => {
-  event.preventDefault()
-  const rating = Number(new FormData(form).get('rating'))
-  select('#preview-stars').textContent = `${rating} / 5 stars`
-  select('#preview-message').textContent = select<HTMLTextAreaElement>('#review-message').value.trim() || 'No written review added.'
-  form.hidden = true
-  select<HTMLElement>('#review-preview').hidden = false
-})
-select('#edit-review').addEventListener('click', () => {
-  form.hidden = false
-  select<HTMLElement>('#review-preview').hidden = true
-  select<HTMLTextAreaElement>('#review-message').focus()
 })
 // Load motion only when the rewards card is approached. Content never waits for it.
 const motionTarget = select('.reward-card')
