@@ -12,9 +12,33 @@ function App() {
  const dialog = useRef<HTMLDialogElement>(null)
  const [offerOpen, setOfferOpen] = useState(false)
  function openDemo() {
+  resetTap()
+  dialog.current?.showModal()
+ }
+ const [moving, setMoving] = useState(false)
+ const demoPhone = useRef<HTMLDivElement>(null)
+ const demoTile = useRef<HTMLDivElement>(null)
+ const tapTimeline = useRef<gsap.core.Timeline | null>(null)
+ function resetTap() {
+  tapTimeline.current?.kill()
+  gsap.set(demoPhone.current, {x:0,y:0,rotation:0,scale:1})
+  gsap.set('.contact-pulse', {scale:.5,opacity:0})
+  setMoving(false)
   setTapped(false)
   setOfferOpen(false)
-  dialog.current?.showModal()
+ }
+ function animateTap() {
+  if (moving || tapped || !demoPhone.current || !demoTile.current) return
+  setMoving(true)
+  const phone = demoPhone.current.getBoundingClientRect()
+  const tile = demoTile.current.getBoundingClientRect()
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  tapTimeline.current = gsap.timeline({onComplete: () => setMoving(false)})
+   .to(demoPhone.current, {x:tile.left + tile.width*.65 - phone.left - phone.width*.5,y:tile.top + tile.height*.4 - phone.top - phone.height*.65,scale:.92,duration:reduced ? .01 : .85,rotation:reduced ? 0 : -16,ease:'power2.inOut'})
+   .to('.contact-pulse', {opacity:1,scale:1.4,duration:reduced ? .01 : .35}, '>-0.05')
+   .call(() => setTapped(true))
+   .to('.contact-pulse', {opacity:0,scale:1.9,duration:.3})
+   .to(demoPhone.current, {x:0,y:0,rotation:0,scale:1,duration:reduced ? .01 : .8,ease:'power2.inOut'}, '+=.2')
  }
  const root = useRef<HTMLDivElement>(null)
  useGSAP(() => {
@@ -39,10 +63,17 @@ function App() {
  <section className="benefits shell" id="how-it-works"><div className="section-heading"><p>Less to ask for.<br/>More to come back for.</p><h2>A better end<br/>to every checkout.</h2></div><div className="benefit-grid">{[['No details needed.','Customers tap their phone to open a branded receipt in an App Clip. No email address or phone number to spell out.'],['Your checkout stays.','Designed to connect with existing POS systems, including Square, Shopify, and Clover. Integrations in development.'],['Paper, at your pace.','Works alongside your receipt printer. Let customers choose while your store makes the switch.']].map(([title,body])=><article key={title}><h3>{title}</h3><p>{body}</p></article>)}</div></section>
  <section className="story shell"><article className="story-card story-first"><div><h2>A small footprint.<br/>On your counter, too.</h2><p>One compact tile, right where checkout happens.</p></div><div className="tile-study" aria-label="Illustration of CinderTap countertop tile"><Mark/><span>CinderTap</span><div className="tap-rings">)))</div><small>Tap for your receipt</small></div></article><article className="story-card story-second"><div><h2>The next visit<br/>starts here.</h2><p>Add loyalty perks, offers, reviews, and social links to a receipt that feels like your business.</p></div><div className="loyalty-sample"><span>THE DAILY</span><h3>Your usual.<br/>On us.</h3><div className="coffee-dots"><i/><i/><i/><i/><i/></div><p>Five coffees. One thank you.</p><small>Illustrative loyalty offer</small></div></article></section>
  <section className="closing shell"><h2>All it takes<br/>is a <span className="inline-tile"><Mark small/></span> tap.</h2><button className="closing-demo" onClick={openDemo}>Experience CinderTap <span aria-hidden="true">↗</span></button></section><footer className="shell"><a className="brand" href="#"><Mark small/>CinderTap</a><span>Digital receipts. One tap away.</span><span>© 2026 CinderTap</span></footer></main>
- <dialog className="demo-dialog" ref={dialog} onClick={event => { if(event.target === event.currentTarget) dialog.current?.close() }}>
+ <dialog className="demo-dialog phone-demo-dialog" aria-label="Phone tap demonstration" ref={dialog} onClose={resetTap} onClick={event => { if(event.target === event.currentTarget) dialog.current?.close() }}>
   <div className="demo-header"><span>CinderTap <small>Interactive demo</small></span><button aria-label="Close demo" onClick={() => dialog.current?.close()}>×</button></div>
   <div className="demo-content" aria-live="polite">
-  {!tapped ? <div className="demo-ready"><span className="demo-step">Sale complete · $9.50</span><h2>Now, get your receipt.</h2><p>At the counter, you would hold your phone near the tile.<br/>Here, just click it.</p><button className="demo-tile" onClick={() => setTapped(true)}><Mark/><strong>CinderTap</strong><svg viewBox="0 0 60 60" fill="none" aria-hidden="true"><path d="M29 15a22 22 0 0 1 0 30M37 9a30 30 0 0 1 0 42M21 21a14 14 0 0 1 0 18" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/></svg><span>Tap to receive receipt</span></button><p className="demo-note">A browser simulation. No NFC or POS connection required.</p></div> : <div className="demo-result"><div className="demo-success">Receipt received. No details shared.</div><div className="demo-paper"><div className="demo-store">{shops[receiptIndex]}</div><p className="demo-thanks">Thanks for stopping by.</p><div className="demo-receipt-meta">Sample receipt · Paid by card</div><div className="demo-line"><span>{receiptIndex === 0 ? 'Oat milk latte' : 'House blend'}</span><span>$5.50</span></div><div className="demo-line"><span>Butter croissant</span><span>$4.00</span></div><div className="demo-line demo-total"><strong>Total paid</strong><strong>$9.50</strong></div><button className="demo-perk" onClick={() => setOfferOpen(!offerOpen)} aria-expanded={offerOpen}><span>A reason to come back<br/><strong>{offerOpen ? 'Your next coffee is on us.' : 'Open your next-visit offer'}</strong></span><span aria-hidden="true">{offerOpen ? '−' : '+'}</span></button>{offerOpen && <div className="demo-offer"><strong>ONE ON THE HOUSE</strong><p>Show this offer on your next visit for one complimentary coffee.</p><small>Illustrative offer only. Not redeemable.</small></div>}<p className="demo-powered">Your brand. Your loyalty offers. Powered by CinderTap.</p></div><div className="demo-result-footer"><p>This is what opens on your customer’s phone.<br/>No app download, email, or signup.</p><button onClick={() => {setTapped(false); setOfferOpen(false)}}>Try again <span aria-hidden="true">↗</span></button></div></div>}
+  <div className="tap-demo-heading"><h2>{tapped ? 'Your receipt. Right there.' : moving ? 'One quick tap.' : 'Watch the phone tap.'}</h2><p>{tapped ? 'No email, signup, or app download.' : 'A sale completes. Your phone meets the tile.'}</p></div>
+  <div className={`tap-stage ${tapped ? 'tap-complete' : ''}`}>
+   <div className="counter-tile" ref={demoTile}><Mark/><strong>CinderTap</strong><svg viewBox="0 0 60 60" fill="none" aria-hidden="true"><path d="M29 15a22 22 0 0 1 0 30M37 9a30 30 0 0 1 0 42M21 21a14 14 0 0 1 0 18" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/></svg><small>Tap for your receipt</small><span className="contact-pulse"/></div>
+   <div className="tap-phone" ref={demoPhone}><div className="tap-phone-camera"/>
+   {!tapped ? <div className="phone-lock"><span>9:41</span><p>Ready when you are.</p><Mark/><small>Hold near CinderTap</small></div> : <div className="phone-received"><span className="phone-app-label">CinderTap · App Clip preview</span><div className="demo-store">{shops[receiptIndex]}</div><p className="demo-thanks">Thanks for stopping by.</p><div className="demo-receipt-meta">Sample receipt · Paid by card</div><div className="demo-line"><span>{receiptIndex === 0 ? 'Oat milk latte' : 'House blend'}</span><span>$5.50</span></div><div className="demo-line"><span>Butter croissant</span><span>$4.00</span></div><div className="demo-line demo-total"><strong>Total paid</strong><strong>$9.50</strong></div><button className="demo-perk" onClick={() => setOfferOpen(!offerOpen)} aria-expanded={offerOpen}><span>Your next visit<br/><strong>{offerOpen ? 'One coffee, on us.' : 'Open your offer'}</strong></span><span aria-hidden="true">{offerOpen ? '−' : '+'}</span></button>{offerOpen && <div className="demo-offer"><p>Show this receipt for a complimentary coffee.</p><small>Sample offer. Not redeemable.</small></div>}<p className="demo-powered">Powered by CinderTap</p></div>}
+   <div className="tap-phone-home"/></div>
+  </div>
+  <div className="tap-demo-actions"><button className="primary" disabled={moving} onClick={tapped ? resetTap : animateTap}>{moving ? 'Tapping…' : tapped ? 'Replay the tap' : 'Tap phone to tile'} <span aria-hidden="true">↗</span></button><p>A simulated tap and receipt. No NFC required.</p></div>
   </div>
  </dialog></div>
 }
