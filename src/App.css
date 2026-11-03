@@ -5,3 +5,7 @@
 /* The hero preview runs the tap demo in place. */
 .product-scene .phone{transition:none;z-index:3;will-change:transform}
 .product-scene .contact-pulse{left:calc(50% - 50px);top:calc(50% - 50px)}
+
+.hero-detail .primary{display:inline-flex;align-items:center;justify-content:center;gap:28px;min-height:52px;padding:15px 22px;font-size:14px;line-height:1.25;font-weight:500;border-radius:4px}
+.hero-detail .primary svg{flex-shrink:0}
+.hero-detail .primary:focus-visible{outline:2px solid #a64729;outline-offset:4px}

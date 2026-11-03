@@ -50,7 +50,7 @@ function App() {
   return () => mm.revert()
  }, {scope:root})
  return <div ref={root}><main className="overflow-x-hidden w-full max-w-full"><header className="shell"><a className="brand" href="#" aria-label="CinderTap home"><Mark/>CinderTap</a><nav><a href="#how-it-works">The idea</a><button className="nav-demo" onClick={openDemo}>Try the tap <span aria-hidden="true">↗</span></button></nav></header>
- <section className="hero shell" id="demo"><div className="hero-copy"><h1 className="max-w-6xl">The receipt.<br/><span>Reconsidered.</span></h1><div className="hero-detail"><p>A countertop tile. A tap of your phone.<br/>Your receipt, without the paper.</p><button className="primary" onClick={openDemo}>Try the tap <span aria-hidden="true">↗</span></button><p className="micro">No email. No signup. No download.</p></div></div>
+ <section className="hero shell" id="demo"><div className="hero-copy"><h1 className="max-w-6xl">The receipt.<br/><span>Reconsidered.</span></h1><div className="hero-detail"><p>A countertop tile. A tap of your phone.<br/>Your receipt, without the paper.</p><button className="primary" onClick={openDemo}>Try the tap <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></button></div></div>
           <div className={`product-scene ${tapped ? 'is-tapped' : ''}`}>
             
             
