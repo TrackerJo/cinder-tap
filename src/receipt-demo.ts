@@ -55,15 +55,14 @@ async function receiptImage() {
 let selectedExport = ''
 const exportDescriptions: Record<string,string> = {
  quickbooks:'Download a transaction CSV with the date, merchant, and amount. Import it into your selected QuickBooks bank or credit card account.',
- ynab:'Download a YNAB transaction CSV with the date, payee, memo, and outflow. Import it into your selected YNAB account.',
  expensify:'Download a receipt image, then upload it to Expensify to attach it to an expense.'
 }
 async function exportReceipt(kind: string) {
  const button = select<HTMLButtonElement>(kind in exportDescriptions ? '#confirm-export' : `[data-export="${kind}"]`)
  button.disabled = true; button.setAttribute('aria-busy','true')
  try {
-  if(kind === 'quickbooks' || kind === 'ynab') {
-   const csv = kind === 'quickbooks' ? 'Date,Description,Amount\r\n11/02/2026,Mad Mushroom CT-1042,-28.89\r\n' : 'Date,Payee,Memo,Outflow,Inflow\r\n11/02/2026,Mad Mushroom,Receipt CT-1042,28.89,\r\n'
+  if(kind === 'quickbooks') {
+   const csv = 'Date,Description,Amount\r\n11/02/2026,Mad Mushroom CT-1042,-28.89\r\n'
    downloadFile(new Blob([csv],{type:'text/csv;charset=utf-8'}),`mad-mushroom-${kind}.csv`)
   } else {
    const canvas = await receiptImage()
@@ -86,7 +85,7 @@ document.querySelectorAll<HTMLButtonElement>('[data-export]').forEach(button => 
  const kind = button.dataset.export!
  if(kind in exportDescriptions) {
   selectedExport=kind
-  select('#export-title').textContent = `Export for ${kind === 'quickbooks' ? 'QuickBooks' : kind === 'ynab' ? 'YNAB' : 'Expensify'}`
+  select('#export-title').textContent = `Export for ${kind === 'quickbooks' ? 'QuickBooks' : 'Expensify'}`
   select('#export-description').textContent = exportDescriptions[kind]
   select('#confirm-export').textContent = kind === 'expensify' ? 'Download receipt image' : 'Download transaction CSV'
   select<HTMLDialogElement>('#export-dialog').showModal()
