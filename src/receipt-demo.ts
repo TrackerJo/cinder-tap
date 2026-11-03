@@ -101,8 +101,16 @@ select('#confirm-export').addEventListener('click',() => {void exportReceipt(sel
 select('#copy-coupon').addEventListener('click', async () => {
  try {
   await navigator.clipboard.writeText('PIZZA10')
-  notify('Coupon code copied.')
- } catch { notify('Your coupon code is PIZZA10.') }
+  select('#copy-coupon-label').textContent = 'Copied!'
+  select('#coupon-copy-status').textContent = 'PIZZA10 copied to your clipboard.'
+  select('#copy-coupon').classList.add('copied')
+  setTimeout(() => {
+   select('#copy-coupon-label').textContent = 'Copy coupon code'
+   select('#copy-coupon').classList.remove('copied')
+  }, 2500)
+ } catch {
+  select('#coupon-copy-status').textContent = 'Press and hold PIZZA10 above to copy it.'
+ }
 })
 // Load motion only when the rewards card is approached. Content never waits for it.
 const motionTarget = select('.reward-card')
