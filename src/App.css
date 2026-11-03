@@ -228,11 +228,10 @@ h2 {
   border:1px solid #d4d3c4;
   border-radius:14px;
   background:#e6e5d8;
-  transition:flex .7s,background .4s
+  transition:background .4s
 }
 .benefit-grid article:hover,.benefit-grid article:focus {
-  background:#f8eddb;
-  flex:1.25
+  background:#f8eddb
 }
 .step-art {
   height:220px;
@@ -245,9 +244,6 @@ h2 {
 }
 .step-art>* {
   transition:transform .7s
-}
-.benefit-grid article:hover .step-art>* {
-  transform:translateY(-8px) rotate(-5deg) scale(1.05)
 }
 .tap-phone {
   width:82px;
@@ -556,3 +552,5 @@ footer>span {
 }
 
 }
+
+.integration-art{height:200px;padding:25px;background:#e0e3d3}.review-art,.loyalty-art,.offer-art{width:100%;max-width:240px;padding:22px;border-radius:8px;background:#faf8ef;box-shadow:0 9px 20px #25301d0a;display:flex;flex-direction:column;align-items:center;gap:11px;font-size:11px}.integration-google{font-family:Arial,sans-serif;font-weight:700;font-size:31px;color:#4285f4}.integration-stars{color:#d69a25;letter-spacing:3px;font-size:18px;white-space:nowrap}.loyalty-art{background:#313a2b;color:#f5f0e1}.loyalty-art strong{font-size:14px;font-weight:500}.loyalty-art>div{display:flex;gap:8px}.loyalty-art>div>span{width:27px;height:27px;border:1px dashed #a3ad8f;border-radius:50%;display:grid;place-items:center}.loyalty-art .filled{background:#d1dbb5;color:#33412b;border-style:solid}.loyalty-art>span{font-size:10px;color:#bac5a6}.offer-art{background:#ae5236;color:#fff3df;gap:7px;border:1px dashed #ffd7a266}.offer-art strong{font-size:33px;font-weight:500;letter-spacing:-1px}.offer-art>span:last-child{border-top:1px solid #f2c29d60;width:100%;text-align:center;padding-top:11px;margin-top:5px}.integration-story{align-items:center;gap:80px}.integration-story .story-copy{padding-top:0}.integration-story .story-copy h2{max-width:550px;font-size:clamp(34px,3.7vw,53px)}.story-copy .integration-note{font-size:13px;line-height:1.6;margin-top:17px;max-width:340px}.receipt-example{border:1px solid #dcd7c7;background:#fffdf7;border-radius:13px;box-shadow:0 16px 45px #29332410;overflow:hidden;width:100%;max-width:420px;justify-self:center}.example-merchant{background:#ba1d24;padding:22px;display:flex;justify-content:center;border-bottom:4px solid #e8a537}.example-merchant img{width:240px;max-width:100%;height:auto}.example-content{padding:23px}.example-summary{border-bottom:1px dashed #dcd7c7;padding-bottom:18px}.example-summary>span{display:flex;justify-content:space-between;font-weight:600;font-size:14px}.example-summary small{font-weight:400;color:#8b8678;font-size:10px}.example-summary>div{display:flex;gap:20px;justify-content:space-between;align-items:center;margin-top:18px;font-size:10px;color:#7d7769}.example-summary strong{font-size:20px;color:#36352c;white-space:nowrap}.example-review{display:flex;align-items:center;gap:14px;border:1px solid #e4d8b7;border-radius:5px;padding:16px;margin-top:18px}.example-review>div{display:flex;flex-direction:column;gap:6px;flex:1;font-size:10px;color:#8a7c63}.example-review strong{font-size:12px;font-weight:500;color:#35342c}.example-review .integration-google{font-size:28px}.example-review .integration-stars{font-size:14px}.example-review>span:last-child{color:#a1583c}.example-loyalty{display:flex;flex-direction:column;gap:8px;background:#eef0e4;border-radius:5px;margin-top:11px;padding:16px;color:#59664b;font-size:10px}.example-loyalty strong{font-size:13px;font-weight:500;color:#35442b}.example-loyalty>span:first-child{font-size:9px}.example-offer{margin-top:11px;padding:18px 16px;background:#ba1d24;color:#fff2dc;border:3px solid #e8a537;display:flex;align-items:center;justify-content:space-between;gap:15px}.example-offer>div{display:flex;flex-direction:column;gap:3px}.example-offer strong{font-size:24px;line-height:1.1;letter-spacing:-1px}.example-offer>div>span{font-size:12px}.example-offer>span{font-size:10px}.example-offer:hover{color:white;background:#a11920}.example-caption{display:block;text-align:center;margin-top:17px;font-size:9px;color:#8e8778}@media(max-width:950px){.integration-story{gap:40px}.step-copy h3{font-size:20px}.integration-art{padding:18px}.loyalty-art{padding:18px 12px}.loyalty-art>div{gap:5px}}@media(max-width:700px){.integration-story{gap:40px}.integration-art{height:190px}.integration-story .story-copy h2{font-size:38px;max-width:none}.receipt-example{max-width:420px}.step-copy h3{font-size:23px}}

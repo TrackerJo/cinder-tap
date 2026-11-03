@@ -98,18 +98,23 @@ document.querySelectorAll<HTMLButtonElement>('[data-export]').forEach(button => 
  } else void exportReceipt(kind)
 }))
 select('#confirm-export').addEventListener('click',() => {void exportReceipt(selectedExport)})
+let couponCopyTimer: ReturnType<typeof setTimeout>
 select('#copy-coupon').addEventListener('click', async () => {
  try {
   await navigator.clipboard.writeText('PIZZA10')
-  select('#copy-coupon-label').textContent = 'Copied!'
+  clearTimeout(couponCopyTimer)
+  select('#copy-coupon').setAttribute('aria-label', 'Copied!')
+  select('#copy-coupon').setAttribute('title', 'Copied!')
   select('#coupon-copy-status').textContent = 'PIZZA10 copied to your clipboard.'
   select('#copy-coupon').classList.add('copied')
-  setTimeout(() => {
-   select('#copy-coupon-label').textContent = 'Copy coupon code'
+  couponCopyTimer = setTimeout(() => {
+   select('#copy-coupon').setAttribute('aria-label', 'Copy coupon code')
    select('#copy-coupon').classList.remove('copied')
+   select('#copy-coupon').setAttribute('title', 'Copy coupon code')
+   select('#coupon-copy-status').textContent = ''
   }, 2500)
  } catch {
-  select('#coupon-copy-status').textContent = 'Press and hold PIZZA10 above to copy it.'
+  notify('Press and hold PIZZA10 to copy it.')
  }
 })
 // Load motion only when the rewards card is approached. Content never waits for it.
