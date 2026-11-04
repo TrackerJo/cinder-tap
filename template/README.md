@@ -15,3 +15,5 @@ Stored receipt links now load Firestore documents via `/template/?receipt=<UUID>
 Manual verification: all seven scenarios at 375px with no horizontal overflow; unpaid balance; collapsed payment details; split-payment CSV contents; 60-item PDF download; TypeScript and production build. `npm run lint` currently fails before checking files because the installed typescript-eslint does not support the repository's TypeScript 7 version.
 
 The template reuses `/demo` receipt styles, merchant identity, review placeholder, coupon sheet/copy interaction, and accounting export choices. Pizza Company sample receipts show merchant promotions; unrelated merchants do not inherit Pizza Company offers. Merchant actions are excluded from receipt exports.
+
+Receipt typography uses 15px item names/prices, 13–14px detail/body text, 12px metadata, and a 26px total with darker secondary text. Mobile headers reflow at 360px. Download text uses the corresponding larger canvas scale. `?type=long` aliases the long-receipt sample.

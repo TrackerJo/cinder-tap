@@ -1,19 +1,103 @@
-.template-merchant{display:block;text-align:center;padding:30px 25px 25px}.template-merchant>img{display:block;max-width:370px;width:100%;height:auto;margin:0 auto 18px}.template-merchant h1{font-family:var(--font-heading);font-size:38px;color:#fff4d5;line-height:1.1;letter-spacing:-1px;margin:0 0 20px}.template-merchant>p{font-size:9px;line-height:1.65;color:#ffe3a4;letter-spacing:0;font-weight:400;margin:3px 0;overflow-wrap:anywhere}.template-paper{padding:24px 23px 20px}.receipt-title{display:flex;justify-content:space-between;gap:12px;padding-bottom:21px;border-bottom:1px dashed #dedbcf}.receipt-title h2{font-family:var(--font-heading);font-size:23px;color:#ba1d24;font-weight:400;margin:7px 0 10px}.receipt-title p{font-size:9px;line-height:1.6;color:#7a7466;margin:4px 0}.receipt-title .eyebrow{font-size:8px;letter-spacing:1px;text-transform:uppercase}.receipt-title .timezone{font-size:8px;overflow-wrap:anywhere}.receipt-reference{text-align:right;min-width:78px}.receipt-reference p{font-family:monospace}.receipt-state{display:inline-block;background:#f4f0e5;padding:5px 7px;border-radius:3px;font-size:9px;color:#657354}.context{padding:8px 0;border-bottom:1px dashed #dedbcf}.receipt-row{display:flex;justify-content:space-between;gap:14px;font-size:11px;line-height:1.6;margin:9px 0;color:#726c5e}.receipt-row>span:first-child{min-width:0;overflow-wrap:anywhere}.receipt-row>span:last-child{flex-shrink:0;text-align:right;font-variant-numeric:tabular-nums}.receipt-item{display:grid;grid-template-columns:25px minmax(0,1fr) auto;gap:10px;margin-top:20px}.item-quantity{align-self:start;min-height:23px;min-width:21px;border:1px solid #e9e5dc;border-radius:4px;padding:4px 3px;text-align:center;font-size:10px;color:#888373;overflow-wrap:anywhere}.receipt-item h3{font-size:12px;font-weight:600;line-height:1.5;overflow-wrap:anywhere}.receipt-item p{font-size:9px;line-height:1.6;color:#797363;margin-top:4px;overflow-wrap:anywhere}.receipt-item strong{font-size:11px;font-weight:400;font-variant-numeric:tabular-nums}.receipt-totals{border-top:1px dashed #dedbcf;padding-top:13px;margin-top:23px}.grand-total{font-size:23px;font-weight:600;color:#ba1d24;margin-top:17px;letter-spacing:-.8px}.balance-due{font-weight:600;color:#ba1d24}.receipt-details{border-top:1px solid #eeeae1;margin-top:17px;font-size:10px}.receipt-details summary{cursor:pointer;padding:15px 0;color:#777164;font-size:10px}.receipt-details p,.receipt-message p,.receipt-code p,.image-notice{font-size:10px;line-height:1.7;color:#797363;overflow-wrap:anywhere}.payment+.payment{border-top:1px dashed #dedbcf;padding-top:8px}.receipt-message,.receipt-code{border-top:1px solid #eeeae1;padding-top:16px;margin-top:16px}.receipt-message h3,.receipt-code h3{font-size:10px;font-weight:600;margin-bottom:8px}.original pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f4f0e5;font-size:9px;line-height:1.8;padding:12px}.original img,.receipt-code img{display:block;max-width:100%;height:auto}.original-label{margin-bottom:12px}.template-page>.receipt-exports{background:#fffef9;padding:20px 23px;border:1px solid #e7dfc8;border-top:0;margin-top:10px}.template-page .receipt-paper{clip-path:none}.template-page footer{margin-top:0}@media(max-width:360px){.template-paper,.template-page>.receipt-exports{padding-inline:18px}.receipt-item{gap:8px}.template-merchant{padding-inline:22px}.receipt-title{gap:7px}}@media print{.quick-actions,#merchant-engagement,.receipt-exports,.toast{display:none!important}.template-merchant{background:transparent}.template-merchant>p,.template-merchant h1{color:#292823}.receipt-item{break-inside:avoid}details::details-content{content-visibility:visible;height:auto}details>*{display:block}}
-
-/* Compact merchant identity: address and contact details share lines when space permits. */
-.template-merchant{padding:22px 20px 18px}
-.template-merchant>img{max-width:280px;margin-bottom:12px}
-.template-merchant h1{font-size:32px;margin-bottom:12px}
+/* The merchant identity stays expressive; purchase details use a clear reading scale. */
+.template-page{
+  --receipt-ink:#292823;
+  --receipt-muted:#625d53;
+  --receipt-rule:#ded7c7;
+  --receipt-small:12px;
+  --receipt-detail:13px;
+  --receipt-body:14px;
+  --receipt-item:15px;
+}
+.template-merchant{display:block;text-align:center;padding:22px 20px 20px}
+.template-merchant>img{display:block;max-width:280px;width:100%;height:auto;margin:0 auto 14px}
+.template-merchant h1{font-family:var(--font-heading);font-size:32px;color:#fff4d5;line-height:1.15;letter-spacing:-.5px;margin:0 0 12px;overflow-wrap:anywhere}
 .merchant-info{max-width:390px;margin-inline:auto}
-.merchant-info p{font-size:10px;line-height:1.6;color:#ffe3a4;font-weight:400;letter-spacing:0;margin:2px 0;overflow-wrap:anywhere}
-.merchant-info .merchant-branch{font-size:9px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:5px}
+.merchant-info p{font-size:12px;line-height:1.6;color:#fff0ce;font-weight:400;letter-spacing:0;margin:3px 0;overflow-wrap:anywhere}
+.merchant-info .merchant-branch{font-size:12px;font-weight:600;margin-bottom:5px}
 .merchant-info p span{display:inline-block}
-.merchant-info .merchant-registration{font-size:8px;color:#efc293;margin-top:5px}
-@media(max-width:360px){.template-merchant{padding:18px 16px 16px}.template-merchant>img{max-width:250px}.merchant-info p{font-size:9px}}
-@media print{.merchant-info p,.merchant-info .merchant-registration{color:#292823}}
-
-.template-paper .receipt-item{grid-template-columns:minmax(0,1fr) auto;column-gap:16px}
-
-.receipt-item .item-note{font-style:italic}.receipt-item .item-sku{font-size:8px}
-
-#business-reviews{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:0 0 23px}.review-shortcut{display:flex;align-items:center;gap:9px;min-height:64px;padding:12px;border:1px solid #e4c583;border-radius:8px;background:#fffcf2;color:#4c4032;transition:background .15s,border-color .15s}.review-shortcut:only-child{grid-column:1/-1}.review-shortcut:hover{background:#fff7df;border-color:#cdb98d}.review-shortcut-icon{display:grid;place-items:center;width:26px;height:28px;flex-shrink:0}.review-shortcut .google-logo{width:22px;height:22px}.review-shortcut .yelp-review-icon{display:block;width:26px;height:26px;object-fit:contain}.review-shortcut-copy{display:flex;flex:1;min-width:0;flex-direction:column;gap:5px}.review-shortcut-copy strong{font-size:11px;font-weight:600;line-height:1.4}.review-shortcut-copy>span{font-size:8px;line-height:1.5;color:#8a8070}.review-shortcut-arrow{width:12px;height:12px;flex-shrink:0;color:#a48c65}@media(max-width:400px){.review-shortcut{min-height:56px;padding:10px;gap:7px}.review-shortcut-copy strong{font-size:10px}.review-shortcut-copy>span{display:none}.review-shortcut-arrow{width:10px;height:10px}}@media print{#business-reviews{display:none!important}}
+.merchant-info .merchant-registration{font-size:11px;color:#ffe3a4;margin-top:7px}
+.template-paper{padding:26px 23px 22px;color:var(--receipt-ink)}
+.receipt-title{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:16px;padding-bottom:22px;border-bottom:1px dashed var(--receipt-rule)}
+.receipt-title h2{font-family:var(--font-heading);font-size:26px;line-height:1.2;color:#ba1d24;font-weight:600;letter-spacing:-.5px;margin:0 0 12px}
+.receipt-title p{font-size:var(--receipt-small);line-height:1.6;color:var(--receipt-muted);margin:4px 0}
+.receipt-title .timezone{font-size:11px;overflow-wrap:anywhere}
+.receipt-reference{text-align:right;max-width:112px;padding-top:3px}
+.receipt-reference p{font-family:var(--font-body);font-size:12px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.context{padding:12px 0;border-bottom:1px dashed var(--receipt-rule)}
+.receipt-row{display:flex;justify-content:space-between;align-items:baseline;gap:16px;font-size:var(--receipt-body);line-height:1.5;margin:12px 0;color:var(--receipt-muted)}
+.receipt-row>span:first-child{min-width:0;overflow-wrap:anywhere}
+.receipt-row>span:last-child{flex-shrink:0;max-width:55%;text-align:right;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.context .receipt-row{font-size:var(--receipt-detail);margin:9px 0}
+.context .receipt-row>span:last-child{color:var(--receipt-ink)}
+.template-paper .receipt-item{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:18px;align-items:baseline;margin-top:24px}
+.receipt-item h3{font-family:var(--font-body);font-size:var(--receipt-item);font-weight:600;line-height:1.5;letter-spacing:0;overflow-wrap:anywhere}
+.receipt-item p{font-size:var(--receipt-detail);line-height:1.55;color:var(--receipt-muted);margin-top:5px;overflow-wrap:anywhere}
+.receipt-item strong{font-size:var(--receipt-item);line-height:1.5;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.receipt-item .item-note{font-style:normal}
+.receipt-item .item-sku{font-size:var(--receipt-small)}
+.receipt-totals{border-top:1px dashed var(--receipt-rule);padding-top:12px;margin-top:26px}
+.grand-total{font-size:26px;line-height:1.3;font-weight:600;color:#ba1d24;margin:20px 0 18px;letter-spacing:-.5px}
+.balance-due{font-weight:600;color:#ba1d24}
+.receipt-details{border-top:1px solid #e5dfd2;margin-top:18px;font-size:var(--receipt-detail)}
+.receipt-details summary{cursor:pointer;min-height:48px;padding:16px 0;color:var(--receipt-ink);font-size:var(--receipt-detail);font-weight:500;line-height:1.5}
+.receipt-details p,.receipt-message p,.receipt-code p,.image-notice{font-size:var(--receipt-detail);line-height:1.65;color:var(--receipt-muted);overflow-wrap:anywhere}
+.receipt-details .receipt-row{font-size:var(--receipt-detail)}
+.payment{padding-bottom:8px}
+.payment+.payment{border-top:1px dashed var(--receipt-rule);padding-top:8px}
+.receipt-message,.receipt-code{border-top:1px solid #e5dfd2;padding-top:18px;margin-top:18px}
+.receipt-message h3,.receipt-code h3{font-family:var(--font-body);font-size:var(--receipt-body);font-weight:600;line-height:1.5;margin-bottom:8px}
+.original pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f4f0e5;color:#39362f;font-size:12px;line-height:1.7;padding:16px}
+.original img,.receipt-code img{display:block;max-width:100%;height:auto}
+.template-page .receipt-paper{clip-path:none}
+.template-page>.receipt-exports{background:#fffef9;padding:22px 23px;border:1px solid #e7dfc8;border-top:0;margin-top:10px}
+.template-page .download-actions>button{font-size:13px;min-height:52px;gap:8px}
+.template-page .finance-caption{font-size:11px;color:var(--receipt-muted)}
+.template-page .finance-exports{align-items:center;gap:12px}
+.template-page .finance-exports .export-row{gap:10px;justify-content:flex-start}
+.template-page .finance-exports .export-row>button{min-width:46px;min-height:52px;font-size:10px;gap:8px}
+.template-page .finance-exports .app-icon{width:28px;height:28px}
+.template-page .finance-exports .app-icon.exp svg{width:27px;height:27px}
+.template-page footer{margin-top:0}
+.template-page footer .powered-logo{font-size:12px;color:#625d53}
+.template-page .topbar .powered-logo{font-size:13px}
+.template-page .quick-actions>button{font-size:12px;line-height:1.5}
+.template-page .reward-button{font-size:13px;line-height:1.5}
+.template-page .review-card strong{font-size:15px;line-height:1.5}
+.template-page .review-card>span>span{font-size:12px;line-height:1.5}
+#business-reviews{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:0 0 23px}
+.review-shortcut{display:flex;align-items:center;gap:9px;min-height:64px;padding:12px;border:1px solid #e4c583;border-radius:8px;background:#fffcf2;color:#4c4032;transition:background .15s,border-color .15s}
+.review-shortcut:only-child{grid-column:1/-1}
+.review-shortcut:hover{background:#fff7df;border-color:#cdb98d}
+.review-shortcut-icon{display:grid;place-items:center;width:26px;height:28px;flex-shrink:0}
+.review-shortcut .google-logo{width:22px;height:22px}
+.review-shortcut .yelp-review-icon{display:block;width:26px;height:26px;object-fit:contain}
+.review-shortcut-copy{display:flex;flex:1;min-width:0;flex-direction:column;gap:5px}
+.review-shortcut-copy strong{font-size:13px;font-weight:600;line-height:1.4}
+.review-shortcut-copy>span{font-size:11px;line-height:1.5;color:var(--receipt-muted)}
+.review-shortcut-arrow{width:12px;height:12px;flex-shrink:0;color:#8e754d}
+@media(max-width:400px){
+  .review-shortcut{min-height:56px;padding:10px;gap:7px}
+  .review-shortcut-copy strong{font-size:12px}
+  .review-shortcut-copy>span{display:none}
+  .review-shortcut-arrow{display:none}
+  .template-page .finance-exports{display:block}
+  .template-page .finance-caption{display:block;margin-bottom:12px}
+  .template-page .finance-exports .export-row{justify-content:space-between;gap:8px}
+}
+@media(max-width:360px){
+  .template-paper,.template-page>.receipt-exports{padding-inline:18px}
+  .template-paper .receipt-item{column-gap:12px}
+  .template-merchant{padding:18px 16px}
+  .template-merchant>img{max-width:250px}
+  .receipt-title{grid-template-columns:minmax(0,1fr);gap:8px}
+  .receipt-reference{max-width:none;display:flex;gap:12px;flex-wrap:wrap;text-align:left;padding:0}
+  .receipt-title h2{font-size:25px}
+}
+@media print{
+  .quick-actions,#business-reviews,#merchant-engagement,.receipt-exports,.toast{display:none!important}
+  .template-merchant{background:transparent}
+  .merchant-info p,.merchant-info .merchant-registration,.template-merchant h1{color:#292823}
+  .receipt-item{break-inside:avoid}
+  details::details-content{content-visibility:visible;height:auto}
+  details>*{display:block}
+}
