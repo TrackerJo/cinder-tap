@@ -4,6 +4,7 @@ import './receipt-template.css'
 import './receipt-engagement'
 import { samples } from './receipt-samples'
 import { dateLabel, money } from './receipt-model'
+import { applyBusinessProfile } from './business-profile'
 import { reviewUrl } from './review-links'
 import type { Receipt } from './receipt-model'
 const root = document.querySelector<HTMLDivElement>('#receipt')!
@@ -61,14 +62,17 @@ async function loadReceipt() {
     const result = await getDoc(doc(db, 'receipts', receiptId))
     if (!result.exists()) throw new Error('Receipt not found. Check your link with the business.')
     current = validateReceipt(result.data().receipt)
-    render(current); exports.hidden = false
-    // Only review links are public; addresses and owner details remain in the private business record.
     const businessId = result.data().businessId
+    let reviews: Record<string,unknown> = {}
     if (typeof businessId === 'string' && /^[a-f0-9-]{36}$/i.test(businessId)) {
-      void getDoc(doc(db,'businessReviews',businessId)).then(profile => {
-        if (profile.exists()) renderReviewTiles(profile.data().reviewLinks ?? {})
-      }).catch(() => { /* A missing review profile never prevents viewing the receipt. */ })
+      const [profile,reviewProfile] = await Promise.allSettled([
+        getDoc(doc(db,'businessProfiles',businessId)),
+        getDoc(doc(db,'businessReviews',businessId)),
+      ])
+      if (profile.status === 'fulfilled' && profile.value.exists()) current = applyBusinessProfile(current,profile.value.data())
+      if (reviewProfile.status === 'fulfilled' && reviewProfile.value.exists()) reviews = reviewProfile.value.data().reviewLinks ?? {}
     }
+    render(current); renderReviewTiles(reviews); exports.hidden = false
   } catch (error) { root.textContent = error instanceof Error ? error.message : 'Could not load your receipt. Please try again.' }
 }
 void loadReceipt()

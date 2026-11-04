@@ -16,6 +16,14 @@ try {
  const receipt={id:'INTEGRATION-TEST',merchant:{name:'Integration test business'},issuedAt:new Date().toISOString(),timeZone:'America/Indiana/Indianapolis',currency:'USD',kind:'Sale',status:'Paid',items:[{name:'Test coffee',quantity:1,unitPrice:300,total:300}],subtotal:300,total:300,paid:300,original:{label:'Test text',text:'1 Test coffee 3.00\nTOTAL 3.00'}}
  await setDoc(doc(db,'businesses',businessId),{ownerId:a.user.uid,name:'Integration test business'})
  await setDoc(doc(db,'receipts',id),{ownerId:a.user.uid,businessId,receipt,published:true})
+ const display = {name:'Updated test business',address:['Test address'],phone:'',website:''}
+ await setDoc(doc(db,'businessProfiles',businessId),display)
+ assert.equal((await getDoc(doc(publicDb,'businessProfiles',businessId))).data().name,display.name)
+ assert.equal((await getDoc(doc(publicDb,'receipts',id))).data().receipt.merchant.name,'Integration test business')
+ await assert.rejects(()=>getDocs(collection(publicDb,'businessProfiles')))
+ await assert.rejects(()=>setDoc(doc(otherDb,'businessProfiles',businessId),display))
+ await assert.rejects(()=>setDoc(doc(db,'businessProfiles',businessId),{...display,ownerId:a.user.uid}))
+
  await updateDoc(doc(db,'businesses',businessId),{reviewLinks:{google:'https://g.page/r/test/review',yelp:'https://www.yelp.com/biz/test'}})
  await updateDoc(doc(db,'businesses',businessId),{reviewLinks:{google:'https://g.page/r/test/review'}})
  assert.equal((await getDoc(doc(db,'businesses',businessId))).data().reviewLinks.yelp,undefined)
@@ -37,7 +45,7 @@ try {
  // Keep the temporary account for browser testing; its synthetic receipt and business are removed.
  if (process.env.CINDERTAP_BROWSER_TEST) await writeFile('/tmp/cindertap-test-account.json',JSON.stringify({email,password}),{mode:0o600})
 } finally {
- await deleteDoc(doc(db,'receipts',id));await deleteDoc(doc(db,'businessReviews',businessId));await deleteDoc(doc(db,'businesses',businessId));await deleteUser(b.user); if (!process.env.CINDERTAP_BROWSER_TEST) await deleteUser(a.user)
+ await deleteDoc(doc(db,'receipts',id));await deleteDoc(doc(db,'businessProfiles',businessId));await deleteDoc(doc(db,'businessReviews',businessId));await deleteDoc(doc(db,'businesses',businessId));await deleteUser(b.user); if (!process.env.CINDERTAP_BROWSER_TEST) await deleteUser(a.user)
  for(const d of [db,otherDb,publicDb]) await terminate(d)
  for(const a of [app,other,publicApp]) await deleteApp(a)
 }
