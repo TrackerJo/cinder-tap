@@ -9,6 +9,20 @@ service cloud.firestore {
       allow update: if signedIn() && resource.data.ownerId == request.auth.uid
         && request.resource.data.ownerId == resource.data.ownerId;
     }
+    match /businessReviews/{businessId} {
+      allow get: if true;
+      allow list: if false;
+      allow create, update: if signedIn()
+        && getAfter(/databases/$(database)/documents/businesses/$(businessId)).data.ownerId == request.auth.uid
+        && request.resource.data.keys().hasOnly(['reviewLinks'])
+        && request.resource.data.reviewLinks is map
+        && request.resource.data.reviewLinks.keys().hasOnly(['google', 'yelp'])
+        && (!('google' in request.resource.data.reviewLinks) ||
+          (request.resource.data.reviewLinks.google is string && request.resource.data.reviewLinks.google.size() <= 2048 && request.resource.data.reviewLinks.google.matches('https://.*')))
+        && (!('yelp' in request.resource.data.reviewLinks) ||
+          (request.resource.data.reviewLinks.yelp is string && request.resource.data.reviewLinks.yelp.size() <= 2048 && request.resource.data.reviewLinks.yelp.matches('https://.*')));
+      allow delete: if signedIn() && get(/databases/$(database)/documents/businesses/$(businessId)).data.ownerId == request.auth.uid;
+    }
     match /receipts/{receiptId} {
       // Random receipt IDs are bearer links. The collection cannot be browsed publicly.
       allow get: if resource.data.published == true || (signedIn() && resource.data.ownerId == request.auth.uid);

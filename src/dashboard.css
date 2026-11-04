@@ -9,3 +9,5 @@ label{display:block;font-size:12px;margin-bottom:18px;line-height:1.6}input,text
 @media(prefers-reduced-motion:reduce){button{transition:none}}
 
 .preview-line{display:flex;justify-content:space-between;gap:20px;font-size:12px;color:#746b60;margin-top:12px}.preview-line>span:last-child{flex-shrink:0;font-variant-numeric:tabular-nums}
+
+.business-actions{display:flex;gap:10px;flex-wrap:wrap;flex-shrink:0}.review-settings{border-top:1px solid #dedacf;padding-top:22px;margin:8px 0 22px}.review-settings h2 small{font-size:11px;color:#847761;font-weight:400;margin-left:8px}
