@@ -35,15 +35,19 @@ function render(r: Receipt) {
   document.title = `${r.merchant.name} · Receipt template`
 }
 function renderReviewTiles(links: Record<string, unknown>) {
-  const target = document.querySelector<HTMLElement>('#business-reviews')!
-  target.innerHTML = (['google','yelp'] as const).map(platform => {
+  const shortcuts = document.querySelector<HTMLElement>('#business-reviews')!
+  const tiles = document.querySelector<HTMLElement>('#business-review-tiles')!
+  const entries = (['google','yelp'] as const).flatMap(platform => {
     const url = reviewUrl(links[platform],platform)
-    if (!url) return ''
+    if (!url) return []
     const name = platform === 'google' ? 'Google' : 'Yelp'
     const icon = platform === 'google' ? '<svg class="google-logo" aria-hidden="true"><use href="#google-logo"/></svg>' : '<span class="yelp-review-mark" aria-hidden="true">✳</span>'
-    return `<a class="review-shortcut" href="${escape(url)}" target="_blank" rel="noopener noreferrer"><span class="review-shortcut-icon">${icon}</span><span>${name} review</span><svg class="review-shortcut-arrow" aria-hidden="true"><use href="#arrow"/></svg></a>`
-  }).join('')
-  target.hidden = !target.innerHTML
+    return [{url,name,icon}]
+  })
+  shortcuts.innerHTML = entries.map(({url,name,icon}) => `<a class="review-shortcut" href="${escape(url)}" target="_blank" rel="noopener noreferrer" aria-label="Review us on ${name}" title="${name} review">${icon}</a>`).join('')
+  tiles.innerHTML = entries.map(({url,name,icon}) => `<a class="review-card" href="${escape(url)}" target="_blank" rel="noopener noreferrer"><span class="review-icon google-review-icon">${icon}</span><span><strong>Review us on ${name}</strong><span>Share your experience</span></span><svg class="review-arrow" aria-hidden="true"><use href="#arrow"/></svg></a>`).join('')
+  shortcuts.hidden = !entries.length
+  tiles.hidden = !entries.length
 }
 async function loadReceipt() {
   if (!receiptId) { if (current) render(current); return }
