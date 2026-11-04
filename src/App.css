@@ -710,3 +710,20 @@ header .nav-demo:focus-visible{outline:0;box-shadow:inset 0 0 0 3px var(--brand-
 }
 .closing h2{font-size:clamp(60px,7.8vw,112px)}
 @media(max-width:700px){.closing h2{font-size:clamp(36px,8.5vw,60px)}}
+
+
+/* Keep the opening and final invitation proportional to a phone screen. */
+@media(max-width:700px){
+ .hero{min-height:0;align-items:flex-start;padding:128px 0 44px}
+ .hero h1{font-size:clamp(30px,9.8vw,56px);line-height:1.08}
+ .hero-detail{margin-top:22px}
+ .hero-detail p{font-size:14px;line-height:1.65;max-width:36ch}
+ .hero-actions{margin-top:24px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .hero-action{min-width:0;padding:13px 8px;font-size:11px;gap:6px}
+ .video-demo{margin-top:32px;padding:14px;transform:rotate(1deg)}
+ .closing{min-height:0;padding:56px 0 32px}
+ .closing h2{font-size:clamp(32px,9.2vw,58px);line-height:1.08;letter-spacing:-.045em}
+ .closing .primary{display:flex;width:100%;min-height:56px;margin-top:28px;padding:16px 18px;font-size:13px}
+ .closing-brand{justify-content:flex-start;gap:12px;margin-top:40px;padding:24px 0 8px;font-size:clamp(40px,15vw,100px);color:#fff6e647}
+ .closing-brand .brand-mark{width:clamp(32px,10vw,60px)}
+}

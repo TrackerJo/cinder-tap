@@ -31,7 +31,8 @@ function App() {
    // Pin after the section has been read, including on narrow or short screens.
    {
     ScrollTrigger.create({
-     trigger: '.hero', start: 'bottom bottom', end: () => `+=${window.innerHeight}`,
+     trigger: '.hero', start: 'clamp(bottom bottom)',
+     endTrigger: '.tap-environment', end: 'top top',
      pin: true, pinSpacing: false, invalidateOnRefresh: true,
     })
     gsap.to('.hero-inner', {
@@ -46,7 +47,7 @@ function App() {
       const chapter = root.current?.querySelector<HTMLElement>('.benefits-chapter')
       return chapter && chapter.offsetHeight > window.innerHeight ? 'bottom bottom' : 'top top'
      },
-     end: () => `+=${window.innerHeight}`,
+     endTrigger: '.closing', end: 'clamp(top top)',
      pin: true, pinSpacing: false, invalidateOnRefresh: true,
     })
     gsap.to('.benefits', {
