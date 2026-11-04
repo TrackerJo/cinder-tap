@@ -20,6 +20,7 @@ function render(r: Receipt) {
   const quantity = (n: number) => r.kind === 'Refund' ? Math.abs(n) : n
   const paidLabel = r.kind === 'Refund' ? 'Amount refunded' : 'Amount paid'
   root.innerHTML = `<section class="merchant template-merchant">${r.merchant.logo ? `<img src="${media(r.merchant.logo)}" alt="${escape(r.merchant.name)}">` : `<h1>${escape(r.merchant.name)}</h1>`}<div class="merchant-info">${r.merchant.branch ? `<p class="merchant-branch">${escape(r.merchant.branch)}</p>` : ''}${r.merchant.address?.length ? `<p class="merchant-address">${r.merchant.address.map(line => `<span>${escape(line)}</span>`).join(' · ')}</p>` : ''}${r.merchant.phone || r.merchant.website ? `<p class="merchant-contact">${[r.merchant.phone, r.merchant.website].filter(Boolean).map(line => `<span>${escape(line!)}</span>`).join(' · ')}</p>` : ''}${r.merchant.registration ? `<p class="merchant-registration">${escape(r.merchant.registration)}</p>` : ''}</div></section>
+  <nav id="business-reviews" aria-label="Review this business" hidden></nav>
   ${!receiptId && r.merchant.name === 'Pizza Company' ? '<nav class="quick-actions" aria-label="Quick actions"><button data-open="review-dialog"><span class="shortcut-icon"><svg class="google-logo" aria-hidden="true"><use href="#google-logo"/></svg></span><span>Google review</span><svg class="shortcut-arrow" aria-hidden="true"><use href="#arrow"/></svg></button><button data-open="rewards-dialog"><span class="shortcut-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v4a3 3 0 0 0 0 6v4H4v-4a3 3 0 0 0 0-6V5Z"/><path d="M15 5v2m0 3v1m0 3v1m0 2v2"/></svg></span><span>Pizza coupon</span><svg class="shortcut-arrow" aria-hidden="true"><use href="#arrow"/></svg></button></nav>' : ''}<article class="receipt-paper template-paper" aria-labelledby="receipt-title"><header class="receipt-title"><div><h2 id="receipt-title">${r.kind === 'Refund' ? 'Your refund' : 'Your receipt'}</h2><p>${escape(dateLabel(r))}</p><p class="timezone">${escape(r.timeZone)}</p></div><div class="receipt-reference"><p>#${escape(r.id)}</p>${r.orderNumber ? `<p>Order ${escape(r.orderNumber)}</p>` : ''}</div></header>
   ${r.context?.length ? `<section class="context">${r.context.map(([key, value]) => row(key, value)).join('')}</section>` : ''}
   ${r.items?.length ? `<section class="receipt-items" aria-label="Purchased items">${r.items.map(item => `<div class="receipt-item"><div><h3>${!item.unit && quantity(item.quantity) !== 1 ? `${escape(quantity(item.quantity))} × ` : ''}${escape(item.name)}</h3>${item.unit ? `<p>${escape(quantity(item.quantity))} ${escape(item.unit)} at ${escape(amount(item.unitPrice))}/${escape(item.unit)}</p>` : quantity(item.quantity) !== 1 ? `<p>${escape(amount(item.unitPrice))} each</p>` : item.total !== item.unitPrice && !item.adjustments?.length ? `<p>Base price ${escape(amount(item.unitPrice))}</p>` : ''}${item.variants?.length ? `<p>${item.variants.map(escape).join(' · ')}</p>` : ''}${(item.modifiers ?? []).map(line => `<p>${escape(line)}</p>`).join('')}${(item.notes ?? []).map(line => `<p class="item-note">${escape(line)}</p>`).join('')}${item.sku ? `<p class="item-sku">SKU ${escape(item.sku)}</p>` : ''}${(item.adjustments ?? []).map(a => `<p>${escape(a.label)} ${escape(amount(a.amount))}</p>`).join('')}</div><strong>${escape(amount(item.total))}</strong></div>`).join('')}</section>` : ''}
@@ -40,7 +41,7 @@ function renderReviewTiles(links: Record<string, unknown>) {
     if (!url) return ''
     const name = platform === 'google' ? 'Google' : 'Yelp'
     const icon = platform === 'google' ? '<svg class="google-logo" aria-hidden="true"><use href="#google-logo"/></svg>' : '<span class="yelp-review-mark" aria-hidden="true">✳</span>'
-    return `<a class="review-card" href="${escape(url)}" target="_blank" rel="noopener noreferrer"><span class="review-icon google-review-icon">${icon}</span><span><strong>Review us on ${name}</strong><span>Share your experience</span></span><svg class="review-arrow" aria-hidden="true"><use href="#arrow"/></svg></a>`
+    return `<a class="review-shortcut" href="${escape(url)}" target="_blank" rel="noopener noreferrer"><span class="review-shortcut-icon">${icon}</span><span>${name} review</span><svg class="review-shortcut-arrow" aria-hidden="true"><use href="#arrow"/></svg></a>`
   }).join('')
   target.hidden = !target.innerHTML
 }
@@ -89,7 +90,7 @@ async function exportCanvas(r: Receipt) {
   // Traverse in source order so unknown blocks and original images retain their place.
   const blocks: ({ line: { text: string; heading: boolean } } | { image: HTMLImageElement })[] = []
   async function visit(el: Element) {
-    if (el.classList.contains('quick-actions')) return
+    if (el.classList.contains('quick-actions') || el.id === 'business-reviews') return
     if (el instanceof HTMLImageElement) {
       const img = new Image(); img.crossOrigin = 'anonymous'; img.src = el.src; await img.decode(); blocks.push({ image: img }); return
     }
