@@ -28,8 +28,8 @@ function App() {
   const media = gsap.matchMedia()
   media.add('(prefers-reduced-motion: no-preference)', () => {
    gsap.from('.hero-copy > *', { y: 28, opacity: 0, duration: 1, stagger: .12, ease: 'power3.out' })
-   // Animate inner content while the full-width section remains a solid layer.
-   media.add('(min-width: 1001px) and (min-height: 650px)', () => {
+   // Pin after the section has been read, including on narrow or short screens.
+   {
     ScrollTrigger.create({
      trigger: '.hero', start: 'bottom bottom', end: () => `+=${window.innerHeight}`,
      pin: true, pinSpacing: false, invalidateOnRefresh: true,
@@ -38,17 +38,22 @@ function App() {
      y: -70, scale: .92, opacity: .3, ease: 'none',
      scrollTrigger: { trigger: '.tap-environment', start: 'top bottom', end: 'top top', scrub: true, invalidateOnRefresh: true },
     })
-   })
-   media.add('(min-width: 1001px) and (min-height: 480px)', () => {
+   }
+   {
     ScrollTrigger.create({
-     trigger: '.benefits-chapter', start: 'top top', end: () => `+=${window.innerHeight}`,
+     trigger: '.benefits-chapter',
+     start: () => {
+      const chapter = root.current?.querySelector<HTMLElement>('.benefits-chapter')
+      return chapter && chapter.offsetHeight > window.innerHeight ? 'bottom bottom' : 'top top'
+     },
+     end: () => `+=${window.innerHeight}`,
      pin: true, pinSpacing: false, invalidateOnRefresh: true,
     })
     gsap.to('.benefits', {
      y: -45, scale: .95, opacity: .35, ease: 'none',
      scrollTrigger: { trigger: '.closing', start: 'top bottom', end: 'top top', scrub: true, invalidateOnRefresh: true },
     })
-   })
+   }
    gsap.utils.toArray<HTMLElement>('.integration-tile').forEach((card, index) => {
     gsap.from(card, {
      y: 65, rotation: index === 0 ? -1.5 : index === 1 ? 2 : -2, scale: .96,
