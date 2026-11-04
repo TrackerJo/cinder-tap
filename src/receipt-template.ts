@@ -37,7 +37,6 @@ function render(r: Receipt) {
 }
 function renderReviewTiles(links: Record<string, unknown>) {
   const shortcuts = document.querySelector<HTMLElement>('#business-reviews')!
-  const tiles = document.querySelector<HTMLElement>('#business-review-tiles')!
   const entries = (['google','yelp'] as const).flatMap(platform => {
     const url = reviewUrl(links[platform],platform)
     if (!url) return []
@@ -45,10 +44,8 @@ function renderReviewTiles(links: Record<string, unknown>) {
     const icon = platform === 'google' ? '<svg class="google-logo" aria-hidden="true"><use href="#google-logo"/></svg>' : '<img class="yelp-review-icon" src="/brand/yelp-icon.png?v=burst" alt="" width="30" height="30">'
     return [{url,name,icon}]
   })
-  shortcuts.innerHTML = entries.map(({url,name,icon}) => `<a class="review-shortcut" href="${escape(url)}" target="_blank" rel="noopener noreferrer" aria-label="Review us on ${name}" title="${name} review">${icon}</a>`).join('')
-  tiles.innerHTML = entries.map(({url,name,icon}) => `<a class="review-card" href="${escape(url)}" target="_blank" rel="noopener noreferrer"><span class="review-icon google-review-icon">${icon}</span><span><strong>Review us on ${name}</strong><span>Share your experience</span></span><svg class="review-arrow" aria-hidden="true"><use href="#arrow"/></svg></a>`).join('')
+  shortcuts.innerHTML = entries.map(({url,name,icon}) => `<a class="review-shortcut" href="${escape(url)}" target="_blank" rel="noopener noreferrer"><span class="review-shortcut-icon">${icon}</span><span class="review-shortcut-copy"><strong>${name} review</strong><span>Share your experience</span></span><svg class="review-shortcut-arrow" aria-hidden="true"><use href="#arrow"/></svg></a>`).join('')
   shortcuts.hidden = !entries.length
-  tiles.hidden = !entries.length
 }
 async function loadReceipt() {
   if (!receiptId) { if (current) render(current); return }
