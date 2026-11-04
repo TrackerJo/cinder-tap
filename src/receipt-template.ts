@@ -11,7 +11,7 @@ const root = document.querySelector<HTMLDivElement>('#receipt')!
 const status = document.querySelector<HTMLElement>('#status')!
 const requestedType = new URLSearchParams(window.location.search).get('type')?.trim().toLowerCase()
 const receiptId = new URLSearchParams(window.location.search).get('receipt')
-let current: Receipt | undefined = receiptId ? undefined : (samples.find(sample => sample.type === requestedType) ?? samples[0]).receipt
+let current: Receipt | undefined = receiptId ? undefined : (samples.find(sample => sample.type === (requestedType === 'long' ? 'long-receipt' : requestedType)) ?? samples[0]).receipt
 const escape = (value: string | number) => String(value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]!)
 const row = (label: string, value: string, className = '') => `<div class="receipt-row ${className}"><span>${escape(label)}</span><span>${escape(value)}</span></div>`
 // Only trusted local / HTTPS media is allowed, never arbitrary URL schemes.
@@ -81,8 +81,9 @@ async function exportCanvas(r: Receipt) {
   wrapper.innerHTML = root.innerHTML
   const lines: { text: string; heading: boolean }[] = []
   const measure = document.createElement('canvas').getContext('2d')!
-  measure.font = '24px sans-serif'
+  measure.font = '28px sans-serif'
   const wrap = (text: string, heading: boolean) => {
+    measure.font = `${heading ? '600 32' : '28'}px sans-serif`
     for (const paragraph of text.split('\n')) {
       let line = ''
       for (const char of paragraph) {
@@ -108,17 +109,17 @@ async function exportCanvas(r: Receipt) {
     for (const child of el.children) await visit(child)
   }
   for (const child of wrapper.children) await visit(child)
-  const height = 76 + blocks.reduce((sum, b) => sum + ('line' in b ? 38 : Math.min(1100, b.image.height * Math.min(1, 820 / b.image.width)) + 30), 0)
+  const height = 88 + blocks.reduce((sum, b) => sum + ('line' in b ? 44 : Math.min(1100, b.image.height * Math.min(1, 820 / b.image.width)) + 30), 0)
   if (height > 30000) throw new Error('Receipt is too large to export as an image or PDF. Download CSV instead.')
   const canvas = document.createElement('canvas'); canvas.width = 940; canvas.height = height
   const ctx = canvas.getContext('2d')!; ctx.fillStyle = '#fffef9'; ctx.fillRect(0, 0, canvas.width, canvas.height)
-  let y = 38
+  let y = 44
   for (const block of blocks) {
-    if ('line' in block) { ctx.fillStyle = block.line.heading ? '#ba1d24' : '#302b25'; ctx.font = `${block.line.heading ? 'bold ' : ''}24px sans-serif`; ctx.fillText(block.line.text, 60, y + 26); y += 38 }
+    if ('line' in block) { ctx.fillStyle = block.line.heading ? '#ba1d24' : '#302b25'; ctx.font = `${block.line.heading ? '600 32' : '28'}px sans-serif`; ctx.fillText(block.line.text, 60, y + 32); y += 44 }
     else { const scale = Math.min(1, 820 / block.image.width, 1100 / block.image.height); ctx.drawImage(block.image, 60, y, block.image.width * scale, block.image.height * scale); y += Math.min(1100, block.image.height * Math.min(1, 820 / block.image.width)) + 30 }
   }
   // Include identity even for merchants represented only by their logo.
-  ctx.font = '18px sans-serif'; ctx.fillStyle = '#746b60'; ctx.fillText(`${r.merchant.name} · Powered by CinderTap`, 60, height - 16)
+  ctx.font = '22px sans-serif'; ctx.fillStyle = '#746b60'; ctx.fillText(`${r.merchant.name} · Powered by CinderTap`, 60, height - 16)
   return canvas
 }
 function download(blob: Blob, filename: string) {
@@ -145,7 +146,7 @@ document.addEventListener('click', async event => {
       if (format === 'pdf') {
         const { jsPDF } = await import('jspdf')
         const doc = new jsPDF({ unit: 'pt', format: 'a4' })
-        const width = 515; const pageHeight = Math.floor(742 * canvas.width / width / 38) * 38
+        const width = 515; const pageHeight = Math.floor(742 * canvas.width / width / 44) * 44
         for (let y = 0; y < canvas.height; y += pageHeight) {
           if (y) doc.addPage()
           const slice = document.createElement('canvas'); slice.width = canvas.width; slice.height = Math.min(pageHeight, canvas.height - y)
