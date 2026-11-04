@@ -37,10 +37,12 @@ function App() {
     })
     gsap.to('.hero-inner', {
      y: -70, scale: .92, opacity: .3, ease: 'none',
-     scrollTrigger: { trigger: '.tap-environment', start: 'top bottom', end: 'top top', scrub: true, invalidateOnRefresh: true },
+     scrollTrigger: { trigger: '.tap-environment', start: 'clamp(top bottom)', end: 'top top', scrub: true, invalidateOnRefresh: true },
     })
    }
-   {
+   // Only pin the chapter where the cards fit together in one viewport.
+   // The mobile column must scroll completely before the closing section.
+   media.add('(min-width: 1001px) and (min-height: 480px)', () => {
     ScrollTrigger.create({
      trigger: '.benefits-chapter',
      start: () => {
@@ -54,7 +56,7 @@ function App() {
      y: -45, scale: .95, opacity: .35, ease: 'none',
      scrollTrigger: { trigger: '.closing', start: 'top bottom', end: 'top top', scrub: true, invalidateOnRefresh: true },
     })
-   }
+   })
    gsap.utils.toArray<HTMLElement>('.integration-tile').forEach((card, index) => {
     gsap.from(card, {
      y: 65, rotation: index === 0 ? -1.5 : index === 1 ? 2 : -2, scale: .96,
@@ -64,7 +66,7 @@ function App() {
    })
    gsap.utils.toArray<HTMLElement>('.tap-heading, .section-heading, .closing h2').forEach(heading => {
     gsap.from(heading, {
-     y: 45, opacity: .2, ease: 'none',
+     y: 20, opacity: .2, ease: 'none',
      scrollTrigger: { trigger: heading, start: 'top 95%', end: 'top 70%', scrub: .5 },
     })
    })
