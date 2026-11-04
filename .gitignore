@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Firebase deployment cache
+.firebase/
+firebase-debug.log*
+firestore-debug.log*
+
+# Original local copies; hosted fixtures live in public/test-receipts/
+/test-receipts/

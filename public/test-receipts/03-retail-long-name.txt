@@ -1,0 +1,14 @@
+FIELD SUPPLY
+TEST RECEIPT 003
+2026-11-03 18:42
+--------------------------------
+1 Everyday heavyweight cotton overshirt with reinforced pockets 68.00
+3 Cotton socks              18.00
+1 Canvas tote               12.00
+--------------------------------
+Subtotal                    98.00
+Sales tax                   6.86
+Total                       104.86
+Amount paid                 104.86
+--------------------------------
+SYNTHETIC TEST RECEIPT

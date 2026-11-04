@@ -1,0 +1,72 @@
+[
+  {
+    "file": "01-coffee-shop.bin",
+    "items": 2,
+    "subtotal": 1300,
+    "tax": 91,
+    "total": 1391,
+    "paid": 1391,
+    "status": "Paid",
+    "bytes": 399
+  },
+  {
+    "file": "02-pizza-restaurant.bin",
+    "items": 3,
+    "subtotal": 2700,
+    "tax": 189,
+    "total": 2889,
+    "paid": 2889,
+    "status": "Paid",
+    "bytes": 433
+  },
+  {
+    "file": "03-retail-long-name.bin",
+    "items": 3,
+    "subtotal": 9800,
+    "tax": 686,
+    "total": 10486,
+    "paid": 10486,
+    "status": "Paid",
+    "bytes": 470
+  },
+  {
+    "file": "04-multiple-taxes.bin",
+    "items": 2,
+    "subtotal": 2300,
+    "tax": 299,
+    "total": 2599,
+    "paid": 2599,
+    "status": "Paid",
+    "bytes": 439
+  },
+  {
+    "file": "05-unpaid-order.bin",
+    "items": 2,
+    "subtotal": 2600,
+    "tax": 182,
+    "total": 2782,
+    "paid": 0,
+    "status": "Unpaid",
+    "bytes": 398
+  },
+  {
+    "file": "06-partial-payment.bin",
+    "items": 1,
+    "subtotal": 8000,
+    "tax": 560,
+    "total": 8560,
+    "paid": 4000,
+    "status": "Partially paid",
+    "bytes": 365
+  },
+  {
+    "file": "07-long-receipt-60-items.bin",
+    "items": 60,
+    "subtotal": 6000,
+    "tax": 420,
+    "total": 6420,
+    "paid": 6420,
+    "status": "Paid",
+    "bytes": 2430
+  }
+]
