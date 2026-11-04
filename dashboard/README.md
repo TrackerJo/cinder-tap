@@ -3,7 +3,7 @@
 Live: https://cindertap.com/dashboard/
 Project: https://console.firebase.google.com/project/cindertap-receipts/overview
 
-Create an email/password account in the dashboard, then create a business. Each account owns its businesses and receipts. Choose a business, upload a receipt, review the normalized fields, confirm the sharing notice, and save. The generated `/template/?receipt=<UUID>` link loads the stored receipt on any device without sign-in. A refresh retains businesses and saved receipts. Each save creates a new immutable receipt snapshot.
+Create an email/password account in the dashboard, then create a business. Each account owns its businesses and receipts. The dashboard opens on a business list. Select a business to see its receipt history, then choose Create test receipt. Upload a file or use the built-in sample, review the readable preview, optionally edit the raw data, confirm the sharing notice, and create the receipt link. Saving returns to that business’s receipts. Breadcrumbs return to the business list. The generated `/template/?receipt=<UUID>` link loads the stored receipt on any device without sign-in. A refresh retains businesses and saved receipts. Each save creates a new immutable receipt snapshot.
 
 Supported files (max 256 KB):
 - JSON matching `Receipt` in `src/receipt-model.ts`. “Download example JSON” provides a starting file. Amounts are integer currency minor units.
