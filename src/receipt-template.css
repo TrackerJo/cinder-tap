@@ -15,3 +15,5 @@
 .template-paper .receipt-item{grid-template-columns:minmax(0,1fr) auto;column-gap:16px}
 
 .receipt-item .item-note{font-style:italic}.receipt-item .item-sku{font-size:8px}
+
+#business-reviews{display:grid;gap:12px;margin-top:24px}.review-card .yelp-review-mark{font-size:30px;line-height:1;color:#d32323}@media print{#business-reviews{display:none!important}}

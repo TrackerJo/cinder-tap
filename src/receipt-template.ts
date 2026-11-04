@@ -4,6 +4,7 @@ import './receipt-template.css'
 import './receipt-engagement'
 import { samples } from './receipt-samples'
 import { dateLabel, money } from './receipt-model'
+import { reviewUrl } from './review-links'
 import type { Receipt } from './receipt-model'
 const root = document.querySelector<HTMLDivElement>('#receipt')!
 const status = document.querySelector<HTMLElement>('#status')!
@@ -32,6 +33,17 @@ function render(r: Receipt) {
   document.querySelector<HTMLElement>('#merchant-engagement')!.hidden = !!receiptId || r.merchant.name !== 'Pizza Company'
   document.title = `${r.merchant.name} · Receipt template`
 }
+function renderReviewTiles(links: Record<string, unknown>) {
+  const target = document.querySelector<HTMLElement>('#business-reviews')!
+  target.innerHTML = (['google','yelp'] as const).map(platform => {
+    const url = reviewUrl(links[platform],platform)
+    if (!url) return ''
+    const name = platform === 'google' ? 'Google' : 'Yelp'
+    const icon = platform === 'google' ? '<svg class="google-logo" aria-hidden="true"><use href="#google-logo"/></svg>' : '<span class="yelp-review-mark" aria-hidden="true">✳</span>'
+    return `<a class="review-card" href="${escape(url)}" target="_blank" rel="noopener noreferrer"><span class="review-icon google-review-icon">${icon}</span><span><strong>Review us on ${name}</strong><span>Share your experience</span></span><svg class="review-arrow" aria-hidden="true"><use href="#arrow"/></svg></a>`
+  }).join('')
+  target.hidden = !target.innerHTML
+}
 async function loadReceipt() {
   if (!receiptId) { if (current) render(current); return }
   const exports = document.querySelector<HTMLElement>('.receipt-exports')!
@@ -45,6 +57,13 @@ async function loadReceipt() {
     if (!result.exists()) throw new Error('Receipt not found. Check your link with the business.')
     current = validateReceipt(result.data().receipt)
     render(current); exports.hidden = false
+    // Only review links are public; addresses and owner details remain in the private business record.
+    const businessId = result.data().businessId
+    if (typeof businessId === 'string' && /^[a-f0-9-]{36}$/i.test(businessId)) {
+      void getDoc(doc(db,'businessReviews',businessId)).then(profile => {
+        if (profile.exists()) renderReviewTiles(profile.data().reviewLinks ?? {})
+      }).catch(() => { /* A missing review profile never prevents viewing the receipt. */ })
+    }
   } catch (error) { root.textContent = error instanceof Error ? error.message : 'Could not load your receipt. Please try again.' }
 }
 void loadReceipt()

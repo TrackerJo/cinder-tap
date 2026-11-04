@@ -2,21 +2,23 @@ import { StrictMode, useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createUserWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 import type { User } from 'firebase/auth'
-import { collection, doc, getDocs, query, serverTimestamp, setDoc, where } from 'firebase/firestore'
+import { collection, doc, getDocs, query, serverTimestamp, setDoc, where, writeBatch } from 'firebase/firestore'
 import { auth, db } from './firebase'
 import { parseText, printerText, storedReceipt, validateReceipt } from './receipt-parser'
 import { samples } from './receipt-samples'
 import { money } from './receipt-model'
 import type { Receipt } from './receipt-model'
+import { parseReviewLinks } from './review-links'
+import type { ReviewLinks } from './review-links'
 import './typography.css'
 import './dashboard.css'
-type Business = Receipt['merchant'] & { id: string; ownerId: string; currency: string; timeZone: string }
+type Business = Receipt['merchant'] & { id: string; ownerId: string; currency: string; timeZone: string; reviewLinks?: ReviewLinks }
 type Stored = { id: string; businessId: string; receipt: Receipt; createdAt?: { seconds: number } }
 const errorText = (error: unknown) => error instanceof Error ? error.message : 'Something went wrong. Please try again.'
 const receiptLink = (id: string) => `${window.location.origin}/template/?receipt=${encodeURIComponent(id)}`
 function Dashboard() {
   const [user, setUser] = useState<User | null>(null), [ready, setReady] = useState(false)
-  const [view, setView] = useState<'businesses' | 'business-form' | 'business' | 'receipt'>('businesses')
+  const [view, setView] = useState<'businesses' | 'business-form' | 'business' | 'receipt' | 'reviews'>('businesses')
   const [loading, setLoading] = useState(true)
   const [businesses, setBusinesses] = useState<Business[]>([]), [receipts, setReceipts] = useState<Stored[]>([])
   const [businessId, setBusinessId] = useState(''), [draft, setDraft] = useState(''), [warnings, setWarnings] = useState<string[]>([])
@@ -58,10 +60,32 @@ function Dashboard() {
     try {
       new Intl.NumberFormat('en',{style:'currency',currency:entry.currency}); new Intl.DateTimeFormat('en',{timeZone:entry.timeZone})
       if(!entry.name) throw new Error('Enter a business name.')
-      await setDoc(doc(db,'businesses',id),{...entry,createdAt:serverTimestamp()})
+      entry.reviewLinks = parseReviewLinks({google:data.get('google') || '',yelp:data.get('yelp') || ''})
+      const batch = writeBatch(db)
+      batch.set(doc(db,'businesses',id),{...entry,createdAt:serverTimestamp()})
+      batch.set(doc(db,'businessReviews',id),{reviewLinks:entry.reviewLinks})
+      await batch.commit()
       setBusinesses(prev => [...prev,entry]); setBusinessId(id); setDraft(''); setLastLink(''); form.reset(); setView('business'); setNotice('Business created.')
     } catch(e) { setNotice(errorText(e)) } finally { setBusy(false) }
   }
+  async function saveReviewLinks(form: HTMLFormElement) {
+    if (!business || !user) return
+    setBusy(true); setNotice('')
+    try {
+      const data = new FormData(form)
+      const reviewLinks = parseReviewLinks({google:data.get('google') || '',yelp:data.get('yelp') || ''})
+      const batch = writeBatch(db)
+      batch.update(doc(db,'businesses',business.id),{reviewLinks})
+      batch.set(doc(db,'businessReviews',business.id),{reviewLinks})
+      await batch.commit()
+      setBusinesses(previous => previous.map(b => b.id === business.id ? {...b,reviewLinks} : b))
+      setView('business'); setNotice('Review links saved. They appear on this business’s receipt links, including existing receipts.')
+    } catch (error) { setNotice(errorText(error)) } finally { setBusy(false) }
+  }
+  const reviewFields = (links?: ReviewLinks) => <>
+    <label>Google review link<input name="google" type="url" defaultValue={links?.google ?? ''} placeholder="https://g.page/r/…/review" maxLength={2048}/></label>
+    <label>Yelp review link<input name="yelp" type="url" defaultValue={links?.yelp ?? ''} placeholder="https://www.yelp.com/biz/your-business" maxLength={2048}/></label>
+  </>
   async function upload(file?: File) {
     if (!file || !business) return
     setBusy(true); setNotice(''); setDraft(''); setReviewed(false); setLastLink('')
@@ -107,7 +131,7 @@ function Dashboard() {
     <label>Address<textarea name="address" rows={2} maxLength={1000}/></label>
     <div className="form-pair"><label>Phone<input name="phone" type="tel" maxLength={80}/></label><label>Website<input name="website" placeholder="yourbusiness.com" maxLength={200}/></label></div>
     <div className="form-pair"><label>Currency<input name="currency" defaultValue="USD" required pattern="[A-Za-z]{3}" maxLength={3}/></label><label>Time zone<input name="timeZone" defaultValue="America/Indiana/Indianapolis" required/></label></div>
-    <div className="buttons"><button className="primary" disabled={busy}>Create business</button><button type="button" disabled={busy} onClick={()=>navigate('businesses','')}>Cancel</button></div>
+    <section className="review-settings"><h2>Review links <small>Optional</small></h2><p>Add either or both. Each link adds a review tile to your receipts.</p>{reviewFields()}</section><div className="buttons"><button className="primary" disabled={busy}>Create business</button><button type="button" disabled={busy} onClick={()=>navigate('businesses','')}>Cancel</button></div>
   </form>
   const savedList = <section className="receipt-list" aria-label="Saved receipts">
     {businessReceipts.length ? <><div className="list-labels"><span>Receipt</span><span>Total</span><span>Link</span></div><ul>{businessReceipts.map(r=><li key={r.id}><div><strong>{r.receipt.id}</strong><span>{new Intl.DateTimeFormat('en-US',{dateStyle:'medium',timeZone:r.receipt.timeZone}).format(new Date(r.receipt.issuedAt))}</span></div><span>{r.receipt.total !== undefined ? money(r.receipt,Math.abs(r.receipt.total)) : '—'}</span><a href={receiptLink(r.id)} target="_blank" rel="noreferrer">Open receipt ↗</a></li>)}</ul></> : <div className="empty-state"><h2>No receipts yet.</h2><p>Create a test receipt for {business?.name} to get its first shareable link.</p><button className="primary" onClick={()=>navigate('receipt')}>Create test receipt</button></div>}
@@ -115,12 +139,12 @@ function Dashboard() {
   return <main className="dashboard"><header><a href="/" className="brand"><img src="/brand/cindertap-mark.svg" alt="" width="30" height="30"/>CinderTap</a><span>Receipt dashboard</span>{user && <button disabled={busy} onClick={()=>{void signOut(auth).catch(e=>setNotice(errorText(e)))}}>Sign out</button>}</header>
     <div role="status" aria-live="polite" className="notice">{notice}</div>
     {!ready ? <p>Loading your dashboard…</p> : !user ? <section className="signin"><p className="kicker">BUSINESSES & RECEIPTS</p><h1>Your receipts, in one place.</h1><p>Sign in to manage businesses and upload test receipts.</p><form onSubmit={e=>{e.preventDefault();void account(e.currentTarget,'signin')}}><label>Email<input name="email" type="email" required autoComplete="email"/></label><label>Password<input name="password" type="password" minLength={8} required autoComplete="current-password"/></label><div className="buttons"><button className="primary" disabled={busy}>Sign in</button><button type="button" disabled={busy} onClick={e=>{const form=e.currentTarget.form!;if(form.reportValidity()) void account(form,'signup')}}>Create account</button></div><button type="button" disabled={busy} onClick={e=>{const form=e.currentTarget.form!;const email=form.elements.namedItem('email') as HTMLInputElement;if(email.reportValidity()) void account(form,'reset')}}>Forgot password?</button></form></section> : <>
-      <nav className="breadcrumbs" aria-label="Dashboard navigation"><button disabled={busy || view === 'businesses'} onClick={()=>navigate('businesses','')}>Businesses</button>{view === 'business-form' ? <><span>/</span><span>New business</span></> : business && <><span>/</span><button disabled={busy || view === 'business'} onClick={()=>navigate('business')}>{business.name}</button>{view === 'receipt' && <><span>/</span><span>New receipt</span></>}</>}</nav>
+      <nav className="breadcrumbs" aria-label="Dashboard navigation"><button disabled={busy || view === 'businesses'} onClick={()=>navigate('businesses','')}>Businesses</button>{view === 'business-form' ? <><span>/</span><span>New business</span></> : business && <><span>/</span><button disabled={busy || view === 'business'} onClick={()=>navigate('business')}>{business.name}</button>{view === 'receipt' && <><span>/</span><span>New receipt</span></>}{view === 'reviews' && <><span>/</span><span>Review links</span></>}</>}</nav>
       {loading ? <p className="loading-state">Loading your businesses…</p> : view === 'businesses' ? <>
         <section className="page-heading"><div><h1>Businesses</h1><p>Select a business to manage its test receipts.</p></div><button className="primary" onClick={()=>navigate('business-form','')}>+ Add business</button></section>
         {businesses.length ? <section aria-label="Your businesses" className="business-list"><div className="business-list-labels"><span>Business</span><span>Receipts</span></div><ul>{businesses.map(b=>{const count=receipts.filter(r=>r.businessId===b.id).length;return <li key={b.id}><button className="business-row" onClick={()=>navigate('business',b.id)}><span className="business-initial" aria-hidden="true">{b.name.slice(0,1).toUpperCase()}</span><span className="business-identity"><strong>{b.name}</strong><span>{b.address?.filter(Boolean).join(' · ') || 'No address added'}</span></span><span className="business-count">{count} <span>{count === 1 ? 'receipt' : 'receipts'}</span></span><span className="row-arrow" aria-hidden="true">→</span></button></li>})}</ul></section> : <section className="empty-state"><h2>Your first business starts here.</h2><p>Add a restaurant or business, then create test receipts for it.</p><button className="primary" onClick={()=>navigate('business-form','')}>Add your first business</button></section>}
-      </> : view === 'business-form' ? <><section className="page-heading"><div><h1>Add a business</h1><p>These details appear on its receipts.</p></div></section>{businessForm}</> : business ? view === 'business' ? <>
-        <section className="page-heading"><div><h1>{business.name}</h1><p>{business.address?.join(' · ') || 'Business receipts'}</p><span className="business-meta">{business.currency} · {businessReceipts.length} {businessReceipts.length === 1 ? 'receipt' : 'receipts'}</span></div>{businessReceipts.length > 0 && <button className="primary" onClick={()=>navigate('receipt')}>+ Create test receipt</button>}</section>
+      </> : view === 'business-form' ? <><section className="page-heading"><div><h1>Add a business</h1><p>These details appear on its receipts.</p></div></section>{businessForm}</> : business ? view === 'reviews' ? <><section className="page-heading"><div><h1>Review links</h1><p>For <strong>{business.name}</strong>. Leave a link blank to hide its tile.</p></div></section><form key={business.id} className="business-form" onSubmit={e=>{e.preventDefault();void saveReviewLinks(e.currentTarget)}}>{reviewFields(business.reviewLinks)}<div className="buttons"><button className="primary" disabled={busy}>Save review links</button><button type="button" disabled={busy} onClick={()=>navigate('business')}>Cancel</button></div></form></> : view === 'business' ? <>
+        <section className="page-heading"><div><h1>{business.name}</h1><p>{business.address?.join(' · ') || 'Business receipts'}</p><span className="business-meta">{business.currency} · {businessReceipts.length} {businessReceipts.length === 1 ? 'receipt' : 'receipts'}</span></div><div className="business-actions"><button onClick={()=>navigate('reviews')}>Review links</button>{businessReceipts.length > 0 && <button className="primary" onClick={()=>navigate('receipt')}>+ Create test receipt</button>}</div></section>
         {lastLink && <section className="link-result"><h2>Receipt created</h2><p>Share this link to open the receipt on any device.</p><a href={lastLink} target="_blank" rel="noreferrer">{lastLink}</a><button onClick={()=>{void navigator.clipboard.writeText(lastLink).then(()=>setNotice('Receipt link copied.')).catch(()=>setNotice('Select the link to copy it manually.'))}}>Copy link</button></section>}
         <div className="section-heading"><h2>Receipts</h2><a href="/test-receipts/" target="_blank" rel="noreferrer">Get test files ↗</a></div>{savedList}
       </> : <>
