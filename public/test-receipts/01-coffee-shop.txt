@@ -1,0 +1,13 @@
+CORNER COFFEE
+TEST RECEIPT 001
+2026-11-03 18:42
+--------------------------------
+2 Cappuccino                 9.00
+1 Butter croissant           4.00
+--------------------------------
+Subtotal                    13.00
+Sales tax                   0.91
+Total                       13.91
+Amount paid                 13.91
+--------------------------------
+SYNTHETIC TEST RECEIPT

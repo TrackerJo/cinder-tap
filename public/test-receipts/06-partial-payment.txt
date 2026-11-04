@@ -1,0 +1,12 @@
+PIZZA COMPANY
+TEST RECEIPT 006
+2026-11-03 18:42
+--------------------------------
+2 Family pizza bundle       80.00
+--------------------------------
+Subtotal                    80.00
+Sales tax                   5.60
+Total                       85.60
+Amount paid                 40.00
+--------------------------------
+SYNTHETIC TEST RECEIPT

@@ -4,5 +4,5 @@ import { defineConfig } from 'vite'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  build: { rollupOptions: { input: { main: "index.html", demo: "demo/index.html" } } },
+  build: { rollupOptions: { input: { main: "index.html", demo: "demo/index.html", template: "template/index.html", dashboard: "dashboard/index.html" } } },
 })

@@ -1,0 +1,14 @@
+NEIGHBOURHOOD MARKET
+TEST RECEIPT 004
+2026-11-03 18:42
+--------------------------------
+2 Prepared lunch            20.00
+1 Sparkling water            3.00
+--------------------------------
+Subtotal                    23.00
+Tax A (5%)                  1.15
+Tax B (8%)                  1.84
+Total                       25.99
+Amount paid                 25.99
+--------------------------------
+SYNTHETIC TEST RECEIPT

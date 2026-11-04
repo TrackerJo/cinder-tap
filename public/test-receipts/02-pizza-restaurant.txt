@@ -1,0 +1,14 @@
+PIZZA COMPANY
+TEST RECEIPT 002
+2026-11-03 18:42
+--------------------------------
+1 Cheese pizza              14.00
+1 Cheesestix                 8.00
+2 Fountain drinks            5.00
+--------------------------------
+Subtotal                    27.00
+Sales tax                   1.89
+Total                       28.89
+Amount paid                 28.89
+--------------------------------
+SYNTHETIC TEST RECEIPT
