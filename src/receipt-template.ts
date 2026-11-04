@@ -41,7 +41,7 @@ function renderReviewTiles(links: Record<string, unknown>) {
     const url = reviewUrl(links[platform],platform)
     if (!url) return []
     const name = platform === 'google' ? 'Google' : 'Yelp'
-    const icon = platform === 'google' ? '<svg class="google-logo" aria-hidden="true"><use href="#google-logo"/></svg>' : '<img class="yelp-review-icon" src="/brand/yelp-icon.png" alt="" width="30" height="30">'
+    const icon = platform === 'google' ? '<svg class="google-logo" aria-hidden="true"><use href="#google-logo"/></svg>' : '<img class="yelp-review-icon" src="/brand/yelp-icon.png?v=burst" alt="" width="30" height="30">'
     return [{url,name,icon}]
   })
   shortcuts.innerHTML = entries.map(({url,name,icon}) => `<a class="review-shortcut" href="${escape(url)}" target="_blank" rel="noopener noreferrer" aria-label="Review us on ${name}" title="${name} review">${icon}</a>`).join('')
